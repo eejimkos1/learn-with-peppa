@@ -136,7 +136,7 @@ export function HangmanScreen() {
       alignItems: 'center', position: 'relative', overflow: 'hidden',
       background: 'linear-gradient(160deg, #E8F5E9 0%, #C8E6C9 40%, #A5D6A7 80%, #81C784 100%)',
     }}>
-      <FloatingElements elements={['🔤', '✨', '🌟', '📝', '💫', '🎀']} count={10} />
+      <FloatingElements elements={['🔤', '✨', '🌟', '📝']} count={5} />
 
       {/* Header */}
       <motion.div

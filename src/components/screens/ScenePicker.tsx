@@ -96,7 +96,7 @@ export function ScenePicker() {
       position: 'relative', overflow: 'hidden',
       background: 'linear-gradient(160deg, #FFF0F5 0%, #FFE4F0 40%, #E3F2FD 100%)',
     }}>
-      <FloatingElements elements={['🎯', '✨', '🌟', '🎀', '💖']} count={10} />
+      <FloatingElements elements={['🎯', '✨', '🌟', '🎀']} count={5} />
 
       {/* Header */}
       <motion.div

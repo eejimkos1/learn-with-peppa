@@ -164,7 +164,7 @@ export function ShowAndTell() {
           overflow: 'auto',
         }}
       >
-        <FloatingElements elements={world.floatingElements} count={10} />
+        <FloatingElements elements={world.floatingElements} count={5} />
 
         <div style={{ width: '100%', maxWidth: 'min(480px, 95%)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'clamp(8px, 2vh, 16px)', zIndex: 1 }}>
           <button
@@ -334,8 +334,6 @@ export function ShowAndTell() {
           </Button>
         </motion.div>
 
-        <div style={{ position: 'absolute', bottom: '20px', left: '16px', fontSize: '24px', opacity: 0.3, zIndex: 0 }}>💗</div>
-        <div style={{ position: 'absolute', bottom: '40px', right: '20px', fontSize: '18px', opacity: 0.3, zIndex: 0 }}>💕</div>
       </div>
     );
   }
@@ -358,7 +356,7 @@ export function ShowAndTell() {
         overflow: 'auto',
       }}
     >
-      <FloatingElements elements={['⭐', '💖', '✨', '🌸', '💫']} count={8} />
+      <FloatingElements elements={['⭐', '💖', '✨', '🌸']} count={5} />
 
       <div
         style={{
@@ -509,8 +507,6 @@ export function ShowAndTell() {
         </motion.div>
       </AnimatePresence>
 
-      <div style={{ position: 'absolute', bottom: '20px', left: '16px', fontSize: '24px', opacity: 0.25, zIndex: 0 }}>💗</div>
-      <div style={{ position: 'absolute', bottom: '48px', right: '20px', fontSize: '18px', opacity: 0.25, zIndex: 0 }}>💕</div>
     </div>
   );
 }

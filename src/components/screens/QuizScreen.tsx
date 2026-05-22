@@ -238,7 +238,7 @@ export function QuizScreen() {
       position: 'relative', overflow: 'hidden',
       fontFamily: 'var(--font-body)',
     }}>
-      <FloatingElements elements={['🌙', '⭐', '💫', '🌟', '✨', '🦋', '💖']} count={18} />
+      <FloatingElements elements={['🌙', '⭐', '💫', '🌟', '✨']} count={5} />
       <Confetti active={showConfetti} count={40} />
 
       {/* Header */}

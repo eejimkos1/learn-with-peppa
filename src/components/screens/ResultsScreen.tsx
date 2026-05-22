@@ -144,7 +144,7 @@ export function ResultsScreen() {
       position: 'relative', overflow: 'hidden',
       fontFamily: 'var(--font-body)',
     }}>
-      <FloatingElements elements={['💖', '⭐', '🌸', '💫', '✨', '🎀', '🦋', '🌈']} count={20} />
+      <FloatingElements elements={['💖', '⭐', '🌸', '💫', '✨']} count={6} />
       <Confetti active={confettiActive} count={60} />
 
       {/* Top sparkle strip */}

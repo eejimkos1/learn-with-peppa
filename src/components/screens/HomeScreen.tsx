@@ -65,7 +65,7 @@ export function HomeScreen() {
         }}
       />
 
-      <FloatingElements elements={HOME_ELEMENTS} count={18} />
+      <FloatingElements elements={HOME_ELEMENTS} count={6} />
 
       <motion.div
         initial={{ opacity: 0, y: -20 }}

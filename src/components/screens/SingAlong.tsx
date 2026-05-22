@@ -238,7 +238,7 @@ export function SingAlong() {
       position: 'relative', overflow: 'hidden',
       fontFamily: 'var(--font-body)',
     }}>
-      <FloatingElements elements={['🎵', '🎶', '🎤', '🌸', '💖', '🎀', '⭐', '✨']} count={16} />
+      <FloatingElements elements={['🎵', '🎶', '🎤', '🌸', '✨']} count={5} />
 
       {/* Header */}
       <motion.div

@@ -41,7 +41,7 @@ export function AuthScreen() {
       background: 'linear-gradient(135deg, #FFF0F5, #FFB6C1, #FF69B4)',
       position: 'relative', overflow: 'hidden', padding: 'clamp(14px, 3.5vh, 20px)', gap: 'clamp(12px, 3vh, 16px)',
     }}>
-      <FloatingElements elements={['💖', '🌸', '⭐', '🎀', '✨']} count={10} />
+      <FloatingElements elements={['💖', '🌸', '⭐', '🎀', '✨']} count={5} />
 
       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200 }} style={{ zIndex: 1 }}>
         <PeppaCharacter mood="happy" size="medium" />

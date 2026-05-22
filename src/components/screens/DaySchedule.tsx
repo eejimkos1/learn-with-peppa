@@ -10,7 +10,7 @@ interface Phase {
   timeGreek: string;
   activityName: string;
   activityGreek: string;
-  levels: number[]; // level indices (0-based), e.g. [0,1]
+  levels: number[];
   screen: Screen;
   bgGradient: string;
   accentColor: string;
@@ -91,7 +91,6 @@ const PHASES: Phase[] = [
   },
 ];
 
-// For a level to be available, all prior levels must have at least 1 star
 function isLevelAvailable(levelIndex: number, worldId: WorldId, levelResults: Record<string, { stars: number }>): boolean {
   if (levelIndex === 0) return true;
   for (let i = 0; i < levelIndex; i++) {
@@ -101,30 +100,11 @@ function isLevelAvailable(levelIndex: number, worldId: WorldId, levelResults: Re
   return true;
 }
 
-function getLevelStars(levelIndex: number, worldId: WorldId, levelResults: Record<string, { stars: number }>): number {
-  const key = `${worldId}-${levelIndex}`;
-  return levelResults[key]?.stars ?? 0;
-}
-
-function StarRow({ stars, max = 3 }: { stars: number; max?: number }) {
-  return (
-    <div style={{ display: 'flex', gap: '3px' }}>
-      {Array.from({ length: max }).map((_, i) => (
-        <motion.span
-          key={i}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ delay: i * 0.07, type: 'spring', stiffness: 300 }}
-          style={{
-            fontSize: '16px',
-            filter: i < stars ? 'none' : 'grayscale(1) opacity(0.3)',
-          }}
-        >
-          ⭐
-        </motion.span>
-      ))}
-    </div>
-  );
+function getPhaseStars(levels: number[], worldId: WorldId, levelResults: Record<string, { stars: number }>): number {
+  return levels.reduce((sum, lvl) => {
+    const key = `${worldId}-${lvl}`;
+    return sum + (levelResults[key]?.stars ?? 0);
+  }, 0);
 }
 
 export function DaySchedule() {
@@ -137,15 +117,16 @@ export function DaySchedule() {
     dispatch({ type: 'SET_SCREEN', screen: 'worldMap' });
   }
 
-  function handleLevelClick(phase: Phase, levelIndex: number) {
-    const available = isLevelAvailable(levelIndex, currentWorld as WorldId, progress.levelResults);
-    if (!available) return;
+  function handlePhaseClick(phase: Phase) {
+    const firstAvailable = phase.levels.find(lvl =>
+      isLevelAvailable(lvl, currentWorld as WorldId, progress.levelResults)
+    );
+    if (firstAvailable === undefined) return;
 
-    dispatch({ type: 'SELECT_LEVEL', level: levelIndex });
+    dispatch({ type: 'SELECT_LEVEL', level: firstAvailable });
     dispatch({ type: 'SET_SCREEN', screen: phase.screen });
   }
 
-  // Background based on world
   const worldBg = worldConfig?.colors.background ?? 'linear-gradient(160deg, #FFB6C1, #CE93D8)';
   const worldPrimary = worldConfig?.colors.primary ?? '#E91E63';
 
@@ -161,38 +142,17 @@ export function DaySchedule() {
         overflow: 'hidden',
       }}
     >
-      {/* Decorative floating elements from the world */}
-      {worldConfig && (
-        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
-          {worldConfig.floatingElements.map((el, i) => (
-            <motion.span
-              key={i}
-              animate={{ y: [0, -12, 0], opacity: [0.4, 0.7, 0.4] }}
-              transition={{ duration: 3 + i * 0.7, delay: i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
-              style={{
-                position: 'absolute',
-                left: `${10 + i * 16}%`,
-                top: `${15 + (i % 3) * 25}%`,
-                fontSize: `${14 + (i % 3) * 6}px`,
-              }}
-            >
-              {el}
-            </motion.span>
-          ))}
-        </div>
-      )}
-
       {/* TOP BAR */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
+        transition={{ duration: 0.3 }}
         style={{
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 12px)',
+          padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 20px)',
           background: 'rgba(255,255,255,0.35)',
           backdropFilter: 'blur(12px)',
           borderBottom: '2px solid rgba(255,255,255,0.4)',
@@ -201,12 +161,11 @@ export function DaySchedule() {
       >
         <motion.button
           onClick={handleBack}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.92 }}
+          whileTap={{ scale: 0.9 }}
           style={{
             background: `linear-gradient(135deg, ${worldPrimary}, ${worldConfig?.colors.secondary ?? '#FF69B4'})`,
             border: 'none',
-            borderRadius: 'var(--radius-md)',
+            borderRadius: '50%',
             width: 'clamp(34px, 9vw, 42px)',
             height: 'clamp(34px, 9vw, 42px)',
             fontSize: 'clamp(14px, 4vw, 18px)',
@@ -225,251 +184,122 @@ export function DaySchedule() {
           <div
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(18px, 5vw, 22px)',
+              fontSize: 'clamp(16px, 4.5vw, 20px)',
               color: worldPrimary,
-              textShadow: '0 1px 4px rgba(0,0,0,0.12)',
             }}
           >
-            {worldConfig ? `${worldConfig.icon} ${worldConfig.name}` : '🗓️ Το Πρόγραμμα'}
+            {worldConfig ? `${worldConfig.icon} ${worldConfig.name}` : '🗓️ Πρόγραμμα'}
           </div>
-          <div
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '11px',
-              color: 'rgba(80,40,60,0.7)',
-              marginTop: '1px',
-            }}
-          >
+          <div style={{ fontSize: '11px', color: 'rgba(80,40,60,0.7)' }}>
             {worldConfig?.nameEn ?? 'Day Schedule'}
           </div>
         </div>
 
-        {/* World stars */}
         <div
           style={{
             background: 'rgba(255,255,255,0.55)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '5px 12px',
-            fontFamily: 'var(--font-numbers)',
-            fontSize: '14px',
+            borderRadius: '20px',
+            padding: '4px 10px',
+            fontSize: '13px',
             color: '#FF8C00',
             fontWeight: 700,
-            boxShadow: '0 2px 8px rgba(255,165,0,0.2)',
-            border: '1.5px solid rgba(255,215,0,0.4)',
           }}
         >
           ⭐ {progress.totalStars}
         </div>
       </motion.div>
 
-      {/* PHASES */}
+      {/* PHASE CARDS */}
       <div
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'clamp(12px, 3vh, 16px)',
+          padding: 'clamp(10px, 2.5vh, 14px) clamp(12px, 3vw, 16px)',
           display: 'flex',
           flexDirection: 'column',
           gap: 'clamp(8px, 2vh, 12px)',
           zIndex: 5,
-          position: 'relative',
         }}
       >
-        {/* Title row */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          style={{
-            textAlign: 'center',
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(12px, 3.5vw, 15px)',
-            color: 'rgba(80,30,60,0.8)',
-            marginBottom: '4px',
-          }}
-        >
-          Διάλεξε δραστηριότητα! · Choose an activity!
-        </motion.div>
-
-        {PHASES.map((phase, phaseIndex) => {
-          // Determine if entire phase block is accessible (first level of phase is available)
-          const phaseFirstLevel = phase.levels[0];
-          const phaseAvailable = isLevelAvailable(phaseFirstLevel, currentWorld as WorldId, progress.levelResults);
+        {PHASES.map((phase, i) => {
+          const phaseAvailable = isLevelAvailable(phase.levels[0], currentWorld as WorldId, progress.levelResults);
+          const phaseStars = getPhaseStars(phase.levels, currentWorld as WorldId, progress.levelResults);
+          const maxStars = phase.levels.length * 3;
+          const allDone = phaseStars >= maxStars;
 
           return (
-            <motion.div
+            <motion.button
               key={phase.id}
-              initial={{ opacity: 0, x: phaseIndex % 2 === 0 ? -30 : 30, y: 10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ duration: 0.4, delay: phaseIndex * 0.1, type: 'spring', stiffness: 200 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.06, type: 'spring', stiffness: 250, damping: 20 }}
+              whileTap={phaseAvailable ? { scale: 0.96 } : {}}
+              onClick={() => handlePhaseClick(phase)}
+              disabled={!phaseAvailable}
               style={{
+                width: '100%',
                 background: phaseAvailable
-                  ? 'rgba(255,255,255,0.88)'
-                  : 'rgba(230,220,235,0.65)',
-                borderRadius: 'var(--radius-md)',
-                overflow: 'hidden',
+                  ? phase.bgGradient
+                  : 'linear-gradient(135deg, #e0e0e0, #d0d0d0)',
+                border: 'none',
+                borderRadius: '16px',
+                padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 18px)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'clamp(10px, 3vw, 14px)',
+                cursor: phaseAvailable ? 'pointer' : 'not-allowed',
+                opacity: phaseAvailable ? 1 : 0.5,
                 boxShadow: phaseAvailable
-                  ? '0 5px 20px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.8)'
-                  : '0 2px 8px rgba(0,0,0,0.08)',
-                border: `2px solid ${phaseAvailable ? phase.accentColor + '55' : 'rgba(200,190,210,0.4)'}`,
-                filter: phaseAvailable ? 'none' : 'grayscale(0.3)',
+                  ? `0 4px 16px ${phase.accentColor}30`
+                  : 'none',
+                textAlign: 'left',
               }}
             >
-              {/* Phase header */}
-              <div
-                style={{
-                  background: phaseAvailable ? phase.bgGradient : 'linear-gradient(135deg, #ddd, #ccc)',
-                  padding: 'clamp(8px, 2vh, 10px) clamp(12px, 3vw, 16px)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'clamp(8px, 2.5vw, 10px)',
-                }}
-              >
-                <span style={{ fontSize: 'clamp(20px, 6vw, 26px)' }}>{phase.timeEmoji}</span>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-heading)',
-                      fontSize: 'clamp(13px, 3.5vw, 16px)',
-                      color: phaseAvailable ? phase.accentColor : '#aaa',
-                      fontWeight: 700,
-                    }}
-                  >
-                    {phase.timeGreek} · {phase.timeLabel}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '12px',
-                      color: phaseAvailable ? 'rgba(80,40,60,0.8)' : '#bbb',
-                    }}
-                  >
-                    {phase.activityGreek}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '11px',
-                      color: phaseAvailable ? 'rgba(80,40,60,0.6)' : '#ccc',
-                      fontStyle: 'italic',
-                    }}
-                  >
-                    {phase.activityName}
-                  </div>
+              <span style={{ fontSize: 'clamp(24px, 7vw, 32px)' }}>
+                {phaseAvailable ? phase.timeEmoji : '🔒'}
+              </span>
+
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(14px, 3.8vw, 17px)',
+                  color: phaseAvailable ? phase.accentColor : '#999',
+                  fontWeight: 700,
+                }}>
+                  {phase.activityGreek}
                 </div>
-                {!phaseAvailable && (
-                  <div style={{ fontSize: '20px' }}>🔒</div>
-                )}
+                <div style={{
+                  fontSize: 'clamp(11px, 2.8vw, 13px)',
+                  color: phaseAvailable ? 'rgba(0,0,0,0.6)' : '#bbb',
+                  fontFamily: 'var(--font-body)',
+                }}>
+                  {phase.activityName}
+                </div>
               </div>
 
-              {/* Level buttons */}
-              <div
-                style={{
-                  padding: '10px 14px',
-                  display: 'flex',
-                  gap: '10px',
-                  flexWrap: 'wrap',
-                }}
-              >
-                {phase.levels.map((levelIndex) => {
-                  const available = isLevelAvailable(levelIndex, currentWorld as WorldId, progress.levelResults);
-                  const stars = getLevelStars(levelIndex, currentWorld as WorldId, progress.levelResults);
-                  const done = stars > 0;
-
-                  return (
-                    <motion.button
-                      key={levelIndex}
-                      onClick={() => handleLevelClick(phase, levelIndex)}
-                      whileHover={available ? { scale: 1.05, y: -2 } : {}}
-                      whileTap={available ? { scale: 0.95 } : {}}
-                      style={{
-                        flex: 1,
-                        minWidth: '80px',
-                        background: available
-                          ? done
-                            ? `linear-gradient(135deg, ${phase.accentColor}22, ${phase.accentColor}44)`
-                            : 'linear-gradient(135deg, #fff, #f8f0ff)'
-                          : 'rgba(220,210,225,0.5)',
-                        border: `2px solid ${available ? (done ? phase.accentColor + 'aa' : 'rgba(255,182,193,0.7)') : 'rgba(200,190,210,0.4)'}`,
-                        borderRadius: 'var(--radius-md)',
-                        padding: 'clamp(8px, 2vh, 10px) clamp(6px, 2vw, 8px)',
-                        cursor: available ? 'pointer' : 'not-allowed',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: '5px',
-                        boxShadow: available
-                          ? done
-                            ? `0 3px 12px ${phase.accentColor}30`
-                            : '0 2px 8px rgba(255,105,180,0.15)'
-                          : 'none',
-                        transition: 'all 0.2s',
-                      }}
-                    >
-                      {/* Level number */}
-                      <div
-                        style={{
-                          fontFamily: 'var(--font-heading)',
-                          fontSize: 'clamp(12px, 3vw, 14px)',
-                          color: available ? phase.accentColor : '#bbb',
-                          fontWeight: 700,
-                        }}
-                      >
-                        {available ? `Επίπεδο ${levelIndex + 1}` : `🔒 ${levelIndex + 1}`}
-                      </div>
-
-                      {/* Status: stars if done, lock if not available, empty stars if available but not done */}
-                      {available ? (
-                        <StarRow stars={stars} max={3} />
-                      ) : (
-                        <div style={{ fontSize: '16px' }}>🔒</div>
-                      )}
-
-                      {/* Done checkmark */}
-                      {done && (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', stiffness: 300 }}
-                          style={{
-                            width: '18px',
-                            height: '18px',
-                            background: phase.accentColor,
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '10px',
-                            color: 'white',
-                            fontWeight: 700,
-                          }}
-                        >
-                          ✓
-                        </motion.div>
-                      )}
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </motion.div>
+              {phaseAvailable && (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                  {allDone ? (
+                    <span style={{ fontSize: '18px' }}>✅</span>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '2px' }}>
+                      {Array.from({ length: Math.min(3, maxStars) }).map((_, si) => (
+                        <span key={si} style={{
+                          fontSize: '14px',
+                          opacity: si < Math.min(phaseStars, 3) ? 1 : 0.25,
+                        }}>⭐</span>
+                      ))}
+                    </div>
+                  )}
+                  <span style={{
+                    fontSize: '16px',
+                    color: phase.accentColor,
+                  }}>›</span>
+                </div>
+              )}
+            </motion.button>
           );
         })}
-
-        {/* Bottom decoration */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          style={{
-            textAlign: 'center',
-            padding: '8px',
-            fontFamily: 'var(--font-heading)',
-            fontSize: '20px',
-            color: 'rgba(233,30,99,0.6)',
-          }}
-        >
-          💖 Καλή επιτυχία, {state.progress.totalStars > 0 ? '⭐ αστεράκι' : 'μικρή μαθήτρια'}! 💖
-        </motion.div>
       </div>
     </div>
   );

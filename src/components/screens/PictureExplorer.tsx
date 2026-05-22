@@ -438,10 +438,6 @@ export function PictureExplorer() {
           }}
         />
       )}
-
-      {/* ====== DECORATIVE accents ====== */}
-      <div style={{ position: 'absolute', top: '60px', right: '10px', fontSize: '20px', opacity: 0.2, zIndex: 0, pointerEvents: 'none' }}>💖</div>
-      <div style={{ position: 'absolute', top: '100px', left: '8px', fontSize: '16px', opacity: 0.2, zIndex: 0, pointerEvents: 'none' }}>🌸</div>
     </div>
   );
 }

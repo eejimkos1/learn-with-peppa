@@ -92,13 +92,9 @@ export function WorldMap() {
 
   // Cloud positions for background decoration
   const clouds = [
-    { top: '8%', left: '5%', size: 60, opacity: 0.7 },
-    { top: '12%', left: '55%', size: 80, opacity: 0.55 },
-    { top: '28%', left: '70%', size: 50, opacity: 0.6 },
-    { top: '42%', left: '2%', size: 70, opacity: 0.65 },
-    { top: '58%', left: '60%', size: 55, opacity: 0.5 },
-    { top: '72%', left: '15%', size: 65, opacity: 0.6 },
-    { top: '85%', left: '50%', size: 75, opacity: 0.55 },
+    { top: '10%', left: '5%', size: 60, opacity: 0.6 },
+    { top: '15%', left: '55%', size: 70, opacity: 0.5 },
+    { top: '45%', left: '2%', size: 60, opacity: 0.55 },
   ];
 
   return (

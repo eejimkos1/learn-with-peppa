@@ -13,7 +13,7 @@ export function SplashScreen() {
     const timer = setTimeout(() => {
       dispatch({ type: 'SET_SCREEN', screen: isAuthenticated ? 'home' : 'auth' });
       if (isAuthenticated) dispatch({ type: 'LOAD_USER' });
-    }, 2500);
+    }, 1200);
     return () => clearTimeout(timer);
   }, [dispatch, isAuthenticated]);
 
@@ -24,7 +24,7 @@ export function SplashScreen() {
       background: 'linear-gradient(135deg, #FFB6C1, #FF69B4, #CE93D8)',
       position: 'relative', overflow: 'hidden', gap: 'clamp(14px, 3.5vh, 20px)',
     }}>
-      <FloatingElements elements={['💖', '⭐', '🦋', '✨', '🌸', '🎀']} count={15} />
+      <FloatingElements elements={['💖', '⭐', '🦋', '✨']} count={5} />
 
       <motion.div
         initial={{ scale: 0, rotate: -10 }}

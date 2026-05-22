@@ -28,7 +28,7 @@ export function DressUpScreen() {
       alignItems: 'center', background: 'linear-gradient(160deg, #FFF0F5 0%, #FCE4EC 40%, #F8BBD0 80%, #CE93D8 100%)',
       position: 'relative', overflow: 'hidden',
     }}>
-      <FloatingElements elements={['🎀', '👗', '👑', '💎', '✨', '🩰', '🌸']} count={12} />
+      <FloatingElements elements={['🎀', '👗', '👑', '💎', '✨']} count={5} />
 
       {/* Header */}
       <motion.div
