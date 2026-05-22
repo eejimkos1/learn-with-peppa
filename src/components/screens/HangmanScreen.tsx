@@ -143,7 +143,7 @@ export function HangmanScreen() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         style={{
-          width: '100%', padding: '14px 20px 10px',
+          width: '100%', padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 10px)',
           background: 'linear-gradient(135deg, rgba(76,175,80,0.9), rgba(56,142,60,0.9))',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 4px 20px rgba(76,175,80,0.3)', zIndex: 2,
@@ -154,13 +154,13 @@ export function HangmanScreen() {
           onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'daySchedule' })}
           style={{
             background: 'rgba(255,255,255,0.3)', border: 'none', borderRadius: '50%',
-            width: '36px', height: '36px', fontSize: '18px', cursor: 'pointer', color: 'white',
+            width: 'clamp(30px, 8vw, 36px)', height: 'clamp(30px, 8vw, 36px)', fontSize: 'clamp(14px, 4vw, 18px)', cursor: 'pointer', color: 'white',
           }}
         >
           ←
         </motion.button>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'white', fontWeight: 800 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(13px, 3.5vw, 16px)', color: 'white', fontWeight: 800 }}>
             🔤 Hangman / Κρεμάλα
           </div>
           <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.85)' }}>
@@ -178,7 +178,7 @@ export function HangmanScreen() {
       {/* Game area */}
       <div style={{
         flex: 1, width: '100%', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', padding: '16px', overflowY: 'auto', zIndex: 1, gap: '12px',
+        alignItems: 'center', padding: 'clamp(10px, 2.5vh, 16px)', overflowY: 'auto', zIndex: 1, gap: 'clamp(8px, 2vh, 12px)',
       }}>
 
         {/* Peppa with decorations (lives indicator) */}
@@ -215,8 +215,8 @@ export function HangmanScreen() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             style={{
-              display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap',
-              padding: '12px 16px', background: 'rgba(255,255,255,0.8)',
+              display: 'flex', gap: 'clamp(5px, 1.5vw, 8px)', justifyContent: 'center', flexWrap: 'wrap',
+              padding: 'clamp(8px, 2vh, 12px) clamp(12px, 3vw, 16px)', background: 'rgba(255,255,255,0.8)',
               borderRadius: '20px', border: '3px solid rgba(76,175,80,0.4)',
               boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
             }}
@@ -228,10 +228,10 @@ export function HangmanScreen() {
                   key={i}
                   animate={revealed ? { scale: [1, 1.2, 1] } : {}}
                   style={{
-                    width: '36px', height: '44px',
+                    width: 'clamp(28px, 8vw, 36px)', height: 'clamp(34px, 10vw, 44px)',
                     borderBottom: '3px solid #388E3C',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontFamily: 'var(--font-heading)', fontSize: '24px', fontWeight: 800,
+                    fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 5.5vw, 24px)', fontWeight: 800,
                     color: revealed ? (guessed.has(letter) ? '#2E7D32' : '#D32F2F') : 'transparent',
                   }}
                 >
@@ -267,10 +267,10 @@ export function HangmanScreen() {
                 color: 'white', boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
               }}
             >
-              <div style={{ fontSize: '24px', marginBottom: '4px' }}>
+              <div style={{ fontSize: 'clamp(18px, 5.5vw, 24px)', marginBottom: '4px' }}>
                 {isWordComplete ? '🎉' : '😊'}
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: 700 }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(13px, 3.5vw, 16px)', fontWeight: 700 }}>
                 {isWordComplete ? 'Correct! Σωστά!' : `The word was: ${currentWord}`}
               </div>
               <div style={{ marginTop: '10px' }}>
@@ -297,10 +297,10 @@ export function HangmanScreen() {
               }}
             >
               <PeppaCharacter mood="excited" size="medium" equippedItems={state.progress.equippedItems} />
-              <div style={{ fontSize: '32px', margin: '8px 0' }}>
+              <div style={{ fontSize: 'clamp(24px, 8vw, 32px)', margin: '8px 0' }}>
                 {roundsWon >= totalRounds ? '🌟🌟🌟' : roundsWon >= Math.ceil(totalRounds * 0.6) ? '🌟🌟' : '🌟'}
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: 800 }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(16px, 4.5vw, 20px)', fontWeight: 800 }}>
                 {roundsWon >= totalRounds ? 'PERFECT! ΤΕΛΕΙΑ!' : 'Μπράβο! Good job!'}
               </div>
               <div style={{ fontSize: '14px', opacity: 0.9, marginTop: '4px' }}>
@@ -322,9 +322,9 @@ export function HangmanScreen() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             style={{
-              display: 'flex', flexWrap: 'wrap', gap: '6px',
-              justifyContent: 'center', maxWidth: '360px',
-              padding: '8px', background: 'rgba(255,255,255,0.6)',
+              display: 'flex', flexWrap: 'wrap', gap: 'clamp(4px, 1.2vw, 6px)',
+              justifyContent: 'center', maxWidth: 'min(360px, 95%)',
+              padding: 'clamp(6px, 1.5vh, 8px)', background: 'rgba(255,255,255,0.6)',
               borderRadius: '20px', border: '2px solid rgba(76,175,80,0.3)',
             }}
           >
@@ -339,7 +339,7 @@ export function HangmanScreen() {
                   onClick={() => handleGuess(letter)}
                   disabled={used}
                   style={{
-                    width: '36px', height: '40px',
+                    width: 'clamp(28px, 8vw, 36px)', height: 'clamp(32px, 9vw, 40px)',
                     borderRadius: '10px',
                     border: 'none',
                     background: used
@@ -349,7 +349,7 @@ export function HangmanScreen() {
                       : 'linear-gradient(135deg, #fff, #f0f0f0)',
                     color: used ? (isInWord ? 'white' : '#999') : '#333',
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '16px', fontWeight: 700,
+                    fontSize: 'clamp(13px, 3.5vw, 16px)', fontWeight: 700,
                     cursor: used ? 'default' : 'pointer',
                     boxShadow: used ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
                     opacity: used && !isInWord ? 0.5 : 1,

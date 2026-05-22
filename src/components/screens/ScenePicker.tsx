@@ -103,7 +103,7 @@ export function ScenePicker() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         style={{
-          width: '100%', padding: '14px 20px 10px',
+          width: '100%', padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 10px)',
           background: 'linear-gradient(135deg, rgba(66,165,245,0.9), rgba(33,150,243,0.9))',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 4px 20px rgba(33,150,243,0.3)', zIndex: 2,
@@ -114,13 +114,13 @@ export function ScenePicker() {
           onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'daySchedule' })}
           style={{
             background: 'rgba(255,255,255,0.3)', border: 'none', borderRadius: '50%',
-            width: '36px', height: '36px', fontSize: '18px', cursor: 'pointer', color: 'white',
+            width: 'clamp(30px, 8vw, 36px)', height: 'clamp(30px, 8vw, 36px)', fontSize: 'clamp(14px, 4vw, 18px)', cursor: 'pointer', color: 'white',
           }}
         >
           ←
         </motion.button>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: 'white', fontWeight: 800 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(12px, 3.5vw, 15px)', color: 'white', fontWeight: 800 }}>
             🎯 Τι ταιριάζει; / What belongs?
           </div>
           <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.85)' }}>
@@ -138,7 +138,7 @@ export function ScenePicker() {
       {/* Main content: scene on left/top, items on right/bottom */}
       <div style={{
         flex: 1, display: 'flex', flexDirection: 'column',
-        padding: '12px', gap: '12px', overflowY: 'auto', zIndex: 1,
+        padding: 'clamp(8px, 2vh, 12px)', gap: 'clamp(8px, 2vh, 12px)', overflowY: 'auto', zIndex: 1,
       }}>
 
         {/* Scene card */}
@@ -148,15 +148,15 @@ export function ScenePicker() {
           transition={{ delay: 0.2 }}
           style={{
             background: sceneData.sceneBackground,
-            borderRadius: '20px', padding: '20px',
+            borderRadius: '20px', padding: 'clamp(14px, 3.5vh, 20px)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
             border: '3px solid rgba(255,255,255,0.5)',
             boxShadow: '0 6px 24px rgba(0,0,0,0.1)',
             minHeight: '120px',
           }}
         >
-          <div style={{ fontSize: '40px' }}>{sceneData.sceneEmoji}</div>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: 'white', textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
+          <div style={{ fontSize: 'clamp(30px, 10vw, 40px)' }}>{sceneData.sceneEmoji}</div>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(14px, 4vw, 18px)', color: 'white', textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
             {sceneData.sceneName}
           </div>
           <PeppaCharacter mood={completed ? 'excited' : 'teaching'} size="small" equippedItems={state.progress.equippedItems} />
@@ -167,8 +167,8 @@ export function ScenePicker() {
 
         {/* Items grid */}
         <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px',
-          maxWidth: '400px', margin: '0 auto', width: '100%',
+          display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'clamp(8px, 2.5vw, 10px)',
+          maxWidth: 'min(400px, 100%)', margin: '0 auto', width: '100%',
         }}>
           {shuffledItems.map((item, i) => {
             const isCorrectlySelected = revealed.has(item.word);
@@ -190,7 +190,7 @@ export function ScenePicker() {
                   onClick={() => isCorrectlySelected ? handleListenClick(item.word) : handleItemClick(item)}
                   style={{
                     width: '100%',
-                    padding: '14px 10px',
+                    padding: 'clamp(10px, 2.5vh, 14px) clamp(8px, 2vw, 10px)',
                     background: isCorrectlySelected
                       ? 'linear-gradient(135deg, #4CAF50, #66BB6A)'
                       : isWrong
@@ -209,7 +209,7 @@ export function ScenePicker() {
                       : '0 2px 8px rgba(0,0,0,0.08)',
                   }}
                 >
-                  <span style={{ fontSize: '32px' }}>{item.emoji}</span>
+                  <span style={{ fontSize: 'clamp(24px, 8vw, 32px)' }}>{item.emoji}</span>
                   <span style={{
                     fontSize: '13px', fontFamily: 'var(--font-heading)',
                     color: isCorrectlySelected ? 'white' : isWrong ? 'white' : '#333',

@@ -19,7 +19,7 @@ function StarBadge({ earned, delay }: { earned: boolean; delay: number }) {
         : { scale: 0.7, rotate: 0, opacity: 0.25 }}
       transition={{ type: 'spring', stiffness: 260, damping: 16, delay }}
       style={{
-        fontSize: '52px',
+        fontSize: 'clamp(36px, 12vw, 52px)',
         filter: earned ? 'drop-shadow(0 0 12px rgba(255,215,0,0.9))' : 'grayscale(1)',
         display: 'inline-block',
       }}
@@ -160,7 +160,7 @@ export function ResultsScreen() {
         }}
       />
 
-      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px 20px', overflowY: 'auto', zIndex: 1 }}>
+      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 'clamp(14px, 3.5vh, 20px) clamp(14px, 4vw, 20px)', overflowY: 'auto', zIndex: 1 }}>
 
         {/* World badge */}
         <motion.div
@@ -196,8 +196,8 @@ export function ResultsScreen() {
           transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
           style={{ textAlign: 'center', marginBottom: '20px' }}
         >
-          <div style={{ fontSize: '36px', marginBottom: '4px' }}>{msg.emoji}</div>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', fontWeight: 800, color: '#E91E63', lineHeight: 1.1 }}>
+          <div style={{ fontSize: 'clamp(28px, 9vw, 36px)', marginBottom: '4px' }}>{msg.emoji}</div>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 6vw, 26px)', fontWeight: 800, color: '#E91E63', lineHeight: 1.1 }}>
             {msg.en} {msg.gr}
           </div>
           <div style={{ fontSize: '14px', color: '#C2185B', marginTop: '4px' }}>
@@ -222,7 +222,7 @@ export function ResultsScreen() {
           transition={{ delay: 2.0 }}
           style={{
             background: 'rgba(255,255,255,0.75)',
-            borderRadius: '20px', padding: '16px 32px',
+            borderRadius: '20px', padding: 'clamp(12px, 3vh, 16px) clamp(20px, 6vw, 32px)',
             boxShadow: '0 6px 24px rgba(233,30,99,0.15)',
             border: '2px solid rgba(255,105,180,0.3)',
             backdropFilter: 'blur(8px)',
@@ -232,8 +232,8 @@ export function ResultsScreen() {
           <div style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', color: '#9E9E9E', marginBottom: '4px' }}>
             Σωστές / Correct
           </div>
-          <div style={{ fontFamily: 'var(--font-numbers)', fontSize: '36px', color: '#E91E63', fontWeight: 800 }}>
-            {correct} <span style={{ color: '#9E9E9E', fontSize: '24px' }}>/ {total}</span>
+          <div style={{ fontFamily: 'var(--font-numbers)', fontSize: 'clamp(28px, 9vw, 36px)', color: '#E91E63', fontWeight: 800 }}>
+            {correct} <span style={{ color: '#9E9E9E', fontSize: 'clamp(18px, 5.5vw, 24px)' }}>/ {total}</span>
           </div>
           <div style={{ fontSize: '13px', color: '#FF69B4', marginTop: '4px' }}>
             ⭐ {state.progress.totalStars} total stars
@@ -250,7 +250,7 @@ export function ResultsScreen() {
               transition={{ type: 'spring', stiffness: 200 }}
               style={{
                 background: 'linear-gradient(135deg, #FFD700, #FF8C00)',
-                borderRadius: '24px', padding: '20px 32px',
+                borderRadius: '24px', padding: 'clamp(14px, 3.5vh, 20px) clamp(20px, 6vw, 32px)',
                 textAlign: 'center', color: 'white',
                 boxShadow: '0 8px 40px rgba(255,215,0,0.6)',
                 border: '3px solid rgba(255,255,255,0.6)',
@@ -263,11 +263,11 @@ export function ResultsScreen() {
               <motion.div
                 animate={{ rotate: [0, -10, 10, -5, 5, 0] }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                style={{ fontSize: '60px', marginBottom: '8px' }}
+                style={{ fontSize: 'clamp(40px, 14vw, 60px)', marginBottom: 'clamp(6px, 1.5vh, 8px)' }}
               >
                 {latestReward.icon}
               </motion.div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: 800 }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(16px, 4.5vw, 20px)', fontWeight: 800 }}>
                 {latestReward.nameEn}
               </div>
               <div style={{ fontSize: '14px', opacity: 0.85, marginTop: '2px' }}>

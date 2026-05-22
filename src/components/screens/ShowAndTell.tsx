@@ -18,7 +18,6 @@ interface ReviewQuestion {
   correctIndex: number;
 }
 
-// Shuffle an array (Fisher-Yates)
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -33,7 +32,6 @@ export function ShowAndTell() {
   const { playCorrect, playWrong, playLevelComplete, playStar } = useAudio();
 
   const world = WORLDS.find(w => w.id === state.currentWorld);
-  // level 0 or 1 within ShowAndTell maps to words 0-4 or 5-9
   const startIdx = (state.currentLevel % 2) * 5;
   const words = useMemo(
     () => (world ? world.vocabulary.slice(startIdx, startIdx + 5) : []),
@@ -62,7 +60,7 @@ export function ShowAndTell() {
 
   if (!world || words.length === 0) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         <p>Loading...</p>
       </div>
     );
@@ -71,8 +69,6 @@ export function ShowAndTell() {
   const currentWord = words[currentWordIndex] ?? words[0];
   const showGreek = world.showGreek;
   const primaryColor = world.colors.primary;
-
-  // --- Learning phase helpers ---
 
   function handleSpeak() {
     speakWord(currentWord.english);
@@ -86,7 +82,6 @@ export function ShowAndTell() {
       if (currentWordIndex < words.length - 1) {
         setCurrentWordIndex(i => i + 1);
       } else {
-        // Build review questions
         const questions = buildReviewQuestions();
         setReviewQuestions(questions);
         setReviewIndex(0);
@@ -98,10 +93,8 @@ export function ShowAndTell() {
 
   function buildReviewQuestions(): ReviewQuestion[] {
     const qs: ReviewQuestion[] = [];
-    // Pick 3 random words for the mini-review
     const shuffled = shuffle(words).slice(0, 3);
     for (const target of shuffled) {
-      // Pick 2 distractors (other words from the set)
       const distractors = shuffle(words.filter(w => w.english !== target.english)).slice(0, 2);
       const optionPool = shuffle([target, ...distractors]);
       const correctIndex = optionPool.findIndex(o => o.english === target.english);
@@ -115,10 +108,8 @@ export function ShowAndTell() {
     return qs;
   }
 
-  // --- Review phase helpers ---
-
   function handleReviewAnswer(index: number) {
-    if (answerFeedback !== null) return; // already answered
+    if (answerFeedback !== null) return;
     const correct = index === reviewQuestions[reviewIndex].correctIndex;
     setSelectedAnswer(index);
     setAnswerFeedback(correct ? 'correct' : 'wrong');
@@ -135,7 +126,6 @@ export function ShowAndTell() {
       if (reviewIndex < reviewQuestions.length - 1) {
         setReviewIndex(i => i + 1);
       } else {
-        // Finish
         const finalScore = reviewScore + (correct ? 1 : 0);
         finishLevel(finalScore);
       }
@@ -158,52 +148,48 @@ export function ShowAndTell() {
     });
   }
 
-  // =====================
-  // LEARNING PHASE RENDER
-  // =====================
   if (phase === 'learning') {
     return (
       <div
         style={{
-          minHeight: '100vh',
+          width: '100%',
+          height: '100%',
           background: world.colors.background,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          padding: '20px',
+          padding: 'clamp(12px, 3vh, 20px) clamp(12px, 4vw, 20px)',
           position: 'relative',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
         <FloatingElements elements={world.floatingElements} count={10} />
 
-        {/* Header */}
-        <div style={{ width: '100%', maxWidth: '480px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', zIndex: 1 }}>
+        <div style={{ width: '100%', maxWidth: 'min(480px, 95%)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'clamp(8px, 2vh, 16px)', zIndex: 1 }}>
           <button
             onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'daySchedule' })}
             style={{
               background: 'rgba(255,255,255,0.6)',
               border: '2px solid #FFB6C1',
               borderRadius: '50%',
-              width: '40px', height: '40px',
-              fontSize: '18px',
+              width: 'clamp(32px, 9vw, 40px)', height: 'clamp(32px, 9vw, 40px)',
+              fontSize: 'clamp(14px, 4vw, 18px)',
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
             ←
           </button>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: primaryColor, fontWeight: 700 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(14px, 4vw, 18px)', color: primaryColor, fontWeight: 700 }}>
             📖 Show & Tell
           </div>
-          {/* Progress dots */}
-          <div style={{ display: 'flex', gap: '6px' }}>
+          <div style={{ display: 'flex', gap: 'clamp(4px, 1.5vw, 6px)' }}>
             {words.map((_, i) => (
               <div
                 key={i}
                 style={{
-                  width: '10px', height: '10px', borderRadius: '50%',
+                  width: 'clamp(7px, 2vw, 10px)', height: 'clamp(7px, 2vw, 10px)', borderRadius: '50%',
                   background: i <= currentWordIndex ? primaryColor : 'rgba(255,255,255,0.5)',
                   border: `2px solid ${primaryColor}`,
                   transition: 'background 0.3s',
@@ -213,8 +199,7 @@ export function ShowAndTell() {
           </div>
         </div>
 
-        {/* Peppa + speech bubble */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', marginBottom: '12px', zIndex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'clamp(8px, 2.5vw, 12px)', marginBottom: 'clamp(8px, 2vh, 12px)', zIndex: 1 }}>
           <PeppaCharacter mood={peppaHappy ? 'happy' : 'teaching'} size="medium" />
           <AnimatePresence mode="wait">
             <motion.div
@@ -231,7 +216,6 @@ export function ShowAndTell() {
           </AnimatePresence>
         </div>
 
-        {/* Word card */}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentWordIndex}
@@ -242,34 +226,31 @@ export function ShowAndTell() {
             style={{
               background: 'rgba(255,255,255,0.92)',
               borderRadius: '28px',
-              padding: '28px 32px',
+              padding: 'clamp(16px, 4vh, 28px) clamp(20px, 6vw, 32px)',
               textAlign: 'center',
               boxShadow: '0 8px 32px rgba(233, 30, 99, 0.18)',
               border: '3px solid #FFB6C1',
-              maxWidth: '320px',
+              maxWidth: 'min(320px, 85%)',
               width: '100%',
               zIndex: 1,
               position: 'relative',
             }}
           >
-            {/* Decorative sparkles */}
             <span style={{ position: 'absolute', top: '10px', left: '16px', fontSize: '16px', opacity: 0.5 }}>✨</span>
             <span style={{ position: 'absolute', top: '10px', right: '16px', fontSize: '16px', opacity: 0.5 }}>✨</span>
 
-            {/* Picture / Emoji */}
             <motion.div
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ fontSize: '80px', lineHeight: 1, marginBottom: '12px' }}
+              style={{ fontSize: 'clamp(50px, 15vw, 80px)', lineHeight: 1, marginBottom: 'clamp(8px, 2vh, 12px)' }}
             >
               {currentWord.picture}
             </motion.div>
 
-            {/* English word */}
             <div
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '36px',
+                fontSize: 'clamp(24px, 7vw, 36px)',
                 color: '#E91E63',
                 fontWeight: 700,
                 letterSpacing: '1px',
@@ -280,12 +261,11 @@ export function ShowAndTell() {
               {currentWord.english}
             </div>
 
-            {/* Greek translation (conditional) */}
             {showGreek === 'full' && (
               <div
                 style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize: '22px',
+                  fontSize: 'clamp(16px, 5vw, 22px)',
                   color: '#9C27B0',
                   fontWeight: 600,
                   marginBottom: '8px',
@@ -298,7 +278,7 @@ export function ShowAndTell() {
               <div
                 style={{
                   fontFamily: 'var(--font-body)',
-                  fontSize: '16px',
+                  fontSize: 'clamp(13px, 3.5vw, 16px)',
                   color: '#9C27B0',
                   opacity: 0.6,
                   marginBottom: '8px',
@@ -308,7 +288,6 @@ export function ShowAndTell() {
               </div>
             )}
 
-            {/* Audio button */}
             <motion.button
               onClick={handleSpeak}
               whileHover={{ scale: 1.1 }}
@@ -317,27 +296,26 @@ export function ShowAndTell() {
                 background: 'linear-gradient(135deg, #FF69B4, #E91E63)',
                 border: 'none',
                 borderRadius: '50%',
-                width: '56px',
-                height: '56px',
-                fontSize: '26px',
+                width: 'clamp(42px, 12vw, 56px)',
+                height: 'clamp(42px, 12vw, 56px)',
+                fontSize: 'clamp(20px, 6vw, 26px)',
                 cursor: 'pointer',
                 boxShadow: '0 4px 16px rgba(233,30,99,0.35)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                margin: '0 auto 16px',
+                margin: '0 auto clamp(8px, 2vh, 16px)',
               }}
             >
               🔊
             </motion.button>
 
-            {/* Word index indicator */}
             <div
               style={{
                 fontFamily: 'var(--font-body)',
-                fontSize: '12px',
+                fontSize: 'clamp(10px, 2.8vw, 12px)',
                 color: '#bbb',
-                marginBottom: '16px',
+                marginBottom: 'clamp(8px, 2vh, 16px)',
               }}
             >
               {currentWordIndex + 1} / {words.length}
@@ -345,58 +323,53 @@ export function ShowAndTell() {
           </motion.div>
         </AnimatePresence>
 
-        {/* "I said it!" button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          style={{ marginTop: '20px', zIndex: 1 }}
+          style={{ marginTop: 'clamp(12px, 3vh, 20px)', zIndex: 1 }}
         >
           <Button onClick={handleISaidIt} variant="gold" size="large">
             I said it! ⭐
           </Button>
         </motion.div>
 
-        {/* Pink heart accents */}
         <div style={{ position: 'absolute', bottom: '20px', left: '16px', fontSize: '24px', opacity: 0.3, zIndex: 0 }}>💗</div>
         <div style={{ position: 'absolute', bottom: '40px', right: '20px', fontSize: '18px', opacity: 0.3, zIndex: 0 }}>💕</div>
       </div>
     );
   }
 
-  // ====================
-  // REVIEW PHASE RENDER
-  // ====================
   const currentQ = reviewQuestions[reviewIndex];
   if (!currentQ) return null;
 
   return (
     <div
       style={{
-        minHeight: '100vh',
+        width: '100%',
+        height: '100%',
         background: world.colors.background,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        padding: '20px',
+        padding: 'clamp(12px, 3vh, 20px) clamp(12px, 4vw, 20px)',
         position: 'relative',
-        overflow: 'hidden',
+        overflow: 'auto',
       }}
     >
       <FloatingElements elements={['⭐', '💖', '✨', '🌸', '💫']} count={8} />
 
-      {/* Review header */}
       <div
         style={{
-          width: '100%', maxWidth: '480px',
+          width: '100%', maxWidth: 'min(480px, 95%)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: '16px', zIndex: 1,
+          marginBottom: 'clamp(8px, 2vh, 16px)', zIndex: 1,
         }}
       >
         <div
           style={{
-            fontFamily: 'var(--font-heading)', fontSize: '20px',
+            fontFamily: 'var(--font-heading)', fontSize: 'clamp(16px, 4.5vw, 20px)',
             color: primaryColor, fontWeight: 700,
           }}
         >
@@ -406,9 +379,9 @@ export function ShowAndTell() {
           style={{
             background: 'rgba(255,255,255,0.7)',
             borderRadius: '20px',
-            padding: '4px 12px',
+            padding: 'clamp(3px, 0.8vh, 4px) clamp(8px, 3vw, 12px)',
             fontFamily: 'var(--font-heading)',
-            fontSize: '14px',
+            fontSize: 'clamp(11px, 3vw, 14px)',
             color: '#E91E63',
             border: '2px solid #FFB6C1',
           }}
@@ -417,8 +390,7 @@ export function ShowAndTell() {
         </div>
       </div>
 
-      {/* Peppa + speech bubble */}
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '12px', marginBottom: '16px', zIndex: 1 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 'clamp(8px, 2.5vw, 12px)', marginBottom: 'clamp(8px, 2vh, 16px)', zIndex: 1 }}>
         <PeppaCharacter
           mood={answerFeedback === 'correct' ? 'excited' : answerFeedback === 'wrong' ? 'encouraging' : 'teaching'}
           size="medium"
@@ -435,7 +407,6 @@ export function ShowAndTell() {
         />
       </div>
 
-      {/* Question prompt */}
       <AnimatePresence mode="wait">
         <motion.div
           key={reviewIndex}
@@ -445,11 +416,11 @@ export function ShowAndTell() {
           style={{
             background: 'rgba(255,255,255,0.92)',
             borderRadius: '24px',
-            padding: '20px 24px',
+            padding: 'clamp(12px, 3vh, 20px) clamp(16px, 5vw, 24px)',
             textAlign: 'center',
             boxShadow: '0 6px 24px rgba(233,30,99,0.15)',
             border: '3px solid #FFB6C1',
-            maxWidth: '380px',
+            maxWidth: 'min(380px, 90%)',
             width: '100%',
             zIndex: 1,
           }}
@@ -457,9 +428,9 @@ export function ShowAndTell() {
           <div
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '22px',
+              fontSize: 'clamp(16px, 5vw, 22px)',
               color: '#E91E63',
-              marginBottom: '20px',
+              marginBottom: 'clamp(12px, 3vh, 20px)',
               fontWeight: 700,
             }}
           >
@@ -471,7 +442,7 @@ export function ShowAndTell() {
                 background: 'linear-gradient(135deg, #FF69B4, #E91E63)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                fontSize: '26px',
+                fontSize: 'clamp(18px, 5.5vw, 26px)',
               }}
             >
               "{currentQ.targetWord}"
@@ -479,8 +450,7 @@ export function ShowAndTell() {
             ?
           </div>
 
-          {/* Options */}
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 'clamp(8px, 2.5vw, 12px)', justifyContent: 'center', flexWrap: 'wrap' }}>
             {currentQ.options.map((option, idx) => {
               const isSelected = selectedAnswer === idx;
               const isCorrect = idx === currentQ.correctIndex;
@@ -508,17 +478,18 @@ export function ShowAndTell() {
                   whileHover={answerFeedback === null ? { scale: 1.08 } : {}}
                   whileTap={answerFeedback === null ? { scale: 0.92 } : {}}
                   style={{
-                    width: '90px', height: '90px',
+                    width: 'clamp(65px, 20vw, 90px)', height: 'clamp(65px, 20vw, 90px)',
                     background: bgColor,
                     border: `3px solid ${borderColor}`,
                     borderRadius: '20px',
-                    fontSize: '44px',
+                    fontSize: 'clamp(30px, 10vw, 44px)',
                     cursor: answerFeedback === null ? 'pointer' : 'default',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     boxShadow: '0 4px 12px rgba(233,30,99,0.1)',
                     transition: 'background 0.3s, border-color 0.3s',
+                    position: 'relative',
                   }}
                 >
                   {option.picture}
@@ -530,16 +501,14 @@ export function ShowAndTell() {
             })}
           </div>
 
-          {/* Score stars so far */}
-          <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginTop: '18px' }}>
+          <div style={{ display: 'flex', gap: '6px', justifyContent: 'center', marginTop: 'clamp(10px, 2.5vh, 18px)' }}>
             {Array.from({ length: reviewQuestions.length }).map((_, i) => (
-              <span key={i} style={{ fontSize: '20px', opacity: i < reviewScore ? 1 : 0.25 }}>⭐</span>
+              <span key={i} style={{ fontSize: 'clamp(16px, 4.5vw, 20px)', opacity: i < reviewScore ? 1 : 0.25 }}>⭐</span>
             ))}
           </div>
         </motion.div>
       </AnimatePresence>
 
-      {/* Decorative accents */}
       <div style={{ position: 'absolute', bottom: '20px', left: '16px', fontSize: '24px', opacity: 0.25, zIndex: 0 }}>💗</div>
       <div style={{ position: 'absolute', bottom: '48px', right: '20px', fontSize: '18px', opacity: 0.25, zIndex: 0 }}>💕</div>
     </div>

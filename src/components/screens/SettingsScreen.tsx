@@ -54,20 +54,20 @@ export function SettingsScreen() {
     <div style={{
       width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
       alignItems: 'center', background: 'linear-gradient(180deg, #FFF0F5, #FFB6C1)',
-      position: 'relative', overflow: 'auto', padding: '20px', gap: '16px',
+      position: 'relative', overflow: 'auto', padding: 'clamp(14px, 3.5vh, 20px)', gap: 'clamp(12px, 3vh, 16px)',
     }}>
       <FloatingElements elements={['⚙️', '🎵', '✨', '💖']} count={6} />
 
       <motion.h1
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', color: '#E91E63', zIndex: 1 }}
+        style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 6vw, 26px)', color: '#E91E63', zIndex: 1 }}
       >
         Ρυθμίσεις ⚙️
       </motion.h1>
 
       <PeppaCharacter mood="idle" size="small" />
 
-      <div style={{ width: '100%', maxWidth: '300px', display: 'flex', flexDirection: 'column', gap: '16px', zIndex: 1 }}>
+      <div style={{ width: '100%', maxWidth: 'min(300px, 90%)', display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vh, 16px)', zIndex: 1 }}>
         {/* Volume */}
         <div style={{ background: 'rgba(255,255,255,0.8)', borderRadius: 'var(--radius-md)', padding: '16px' }}>
           <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'var(--font-body)', fontSize: '14px', color: '#4A0028' }}>

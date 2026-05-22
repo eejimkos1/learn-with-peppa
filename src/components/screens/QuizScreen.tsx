@@ -246,7 +246,7 @@ export function QuizScreen() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         style={{
-          width: '100%', padding: '14px 20px 10px',
+          width: '100%', padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 20px) clamp(6px, 1.5vh, 10px)',
           background: 'linear-gradient(135deg, rgba(255,105,180,0.95), rgba(156,39,176,0.95))',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 4px 24px rgba(233,30,99,0.5)', zIndex: 2,
@@ -258,17 +258,17 @@ export function QuizScreen() {
           onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'daySchedule' })}
           style={{
             background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%',
-            width: '36px', height: '36px', fontSize: '18px', cursor: 'pointer', color: 'white',
+            width: 'clamp(30px, 8vw, 36px)', height: 'clamp(30px, 8vw, 36px)', fontSize: '18px', cursor: 'pointer', color: 'white',
           }}
         >
           ←
         </motion.button>
 
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'white', fontWeight: 800 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(13px, 3.5vw, 16px)', color: 'white', fontWeight: 800 }}>
             🌙 Bedtime Quiz
           </div>
-          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.8)' }}>
+          <div style={{ fontSize: 'clamp(9px, 2.5vw, 11px)', color: 'rgba(255,255,255,0.8)' }}>
             {world.name} — Q {Math.min(currentQuestion + 1, questions.length)} / {questions.length}
           </div>
         </div>
@@ -278,15 +278,15 @@ export function QuizScreen() {
 
       {/* Progress dots */}
       <div style={{
-        display: 'flex', gap: '6px', padding: '10px 0', zIndex: 1,
-        flexWrap: 'wrap', justifyContent: 'center', maxWidth: '320px',
+        display: 'flex', gap: 'clamp(4px, 1.2vw, 6px)', padding: 'clamp(6px, 1.5vh, 10px) 0', zIndex: 1,
+        flexWrap: 'wrap', justifyContent: 'center', maxWidth: 'min(320px, 85%)',
       }}>
         {questions.map((_, i) => (
           <motion.div
             key={i}
             animate={{ scale: i === currentQuestion ? 1.3 : 1 }}
             style={{
-              width: '10px', height: '10px', borderRadius: '50%',
+              width: 'clamp(7px, 2vw, 10px)', height: 'clamp(7px, 2vw, 10px)', borderRadius: '50%',
               background: i < currentQuestion
                 ? 'linear-gradient(135deg, #FFD700, #FF8C00)'
                 : i === currentQuestion
@@ -299,14 +299,14 @@ export function QuizScreen() {
         ))}
       </div>
 
-      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '8px 20px', overflowY: 'auto', zIndex: 1 }}>
+      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 'clamp(4px, 1vh, 8px) clamp(12px, 4vw, 20px)', overflowY: 'auto', zIndex: 1 }}>
 
         {/* Timer bar */}
         {hasTimer && !gameOver && !isFinished && (
           <div style={{
-            width: '100%', maxWidth: '480px', height: '8px',
+            width: '100%', maxWidth: '480px', height: 'clamp(5px, 1.2vh, 8px)',
             background: 'rgba(255,255,255,0.15)', borderRadius: '4px',
-            marginBottom: '12px', overflow: 'hidden',
+            marginBottom: 'clamp(6px, 1.5vh, 12px)', overflow: 'hidden',
           }}>
             <motion.div
               key={`timer-${currentQuestion}`}
@@ -336,20 +336,20 @@ export function QuizScreen() {
               transition={{ type: 'spring', stiffness: 200 }}
               style={{
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
-                borderRadius: '28px', padding: '32px 40px', textAlign: 'center',
+                borderRadius: '28px', padding: 'clamp(20px, 4vh, 32px) clamp(24px, 6vw, 40px)', textAlign: 'center',
                 border: '2px solid rgba(255,105,180,0.4)',
                 backdropFilter: 'blur(12px)',
                 boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
               }}
             >
-              <div style={{ fontSize: '60px', marginBottom: '16px' }}>💪</div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '24px', color: '#FFD700', fontWeight: 800 }}>
+              <div style={{ fontSize: 'clamp(40px, 12vw, 60px)', marginBottom: 'clamp(8px, 2vh, 16px)' }}>💪</div>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 5vw, 24px)', color: '#FFD700', fontWeight: 800 }}>
                 Try Again!
               </div>
-              <div style={{ fontSize: '16px', color: 'rgba(255,255,255,0.8)', marginTop: '8px', marginBottom: '24px' }}>
+              <div style={{ fontSize: 'clamp(13px, 3.5vw, 16px)', color: 'rgba(255,255,255,0.8)', marginTop: '8px', marginBottom: 'clamp(14px, 3vh, 24px)' }}>
                 Ξαναπροσπάθησε! You can do it!
               </div>
-              <div style={{ fontSize: '18px', color: '#FFB3C6', marginBottom: '24px' }}>
+              <div style={{ fontSize: 'clamp(14px, 4vw, 18px)', color: '#FFB3C6', marginBottom: 'clamp(14px, 3vh, 24px)' }}>
                 Score: {score} / {currentQuestion + 1}
               </div>
               <Button onClick={handleRetry} variant="gold" size="large">
@@ -368,20 +368,20 @@ export function QuizScreen() {
               transition={{ type: 'spring', stiffness: 200 }}
               style={{
                 background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(233,30,99,0.2))',
-                borderRadius: '28px', padding: '28px 36px', textAlign: 'center',
+                borderRadius: '28px', padding: 'clamp(16px, 3.5vh, 28px) clamp(20px, 6vw, 36px)', textAlign: 'center',
                 border: '2px solid rgba(255,215,0,0.5)',
                 backdropFilter: 'blur(12px)',
                 boxShadow: '0 8px 40px rgba(255,215,0,0.3)',
-                marginBottom: '16px',
+                marginBottom: 'clamp(8px, 2vh, 16px)',
               }}
             >
-              <div style={{ fontSize: '56px', marginBottom: '12px' }}>
+              <div style={{ fontSize: 'clamp(36px, 10vw, 56px)', marginBottom: 'clamp(12px, 3vh, 20px)' }}>
                 {getStars(finalScore) === 3 ? '🌟🌟🌟' : getStars(finalScore) === 2 ? '🌟🌟' : getStars(finalScore) === 1 ? '🌟' : '💪'}
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '22px', color: '#FFD700', fontWeight: 800, marginBottom: '8px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(16px, 5vw, 22px)', color: '#FFD700', fontWeight: 800, marginBottom: '8px' }}>
                 {getStars(finalScore) === 3 ? 'PERFECT! ΤΕΛΕΙΑ!' : getStars(finalScore) >= 2 ? 'Very Good! Πολύ Καλά!' : 'Good Try! Μπράβο!'}
               </div>
-              <div style={{ fontSize: '16px', color: 'rgba(255,255,255,0.85)', marginBottom: '20px' }}>
+              <div style={{ fontSize: 'clamp(13px, 3.5vw, 16px)', color: 'rgba(255,255,255,0.85)', marginBottom: 'clamp(12px, 3vh, 20px)' }}>
                 {finalScore} / {questions.length} correct!
               </div>
               <Button onClick={handleFinish} variant="gold" size="large">
@@ -401,17 +401,17 @@ export function QuizScreen() {
               exit={{ opacity: 0, x: -40, scale: 0.95 }}
               transition={{ duration: 0.35, ease: 'easeOut' }}
               style={{
-                width: '100%', maxWidth: '480px',
+                width: '100%', maxWidth: 'min(480px, 92%)',
                 background: 'rgba(255,255,255,0.08)',
-                borderRadius: '28px', padding: '24px 20px',
+                borderRadius: '28px', padding: 'clamp(14px, 3vh, 24px) clamp(12px, 4vw, 20px)',
                 boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
                 border: '2px solid rgba(255,255,255,0.12)',
                 backdropFilter: 'blur(12px)',
-                marginBottom: '16px',
+                marginBottom: 'clamp(8px, 2vh, 16px)',
               }}
             >
               {/* Question prompt */}
-              <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <div style={{ textAlign: 'center', marginBottom: 'clamp(12px, 3vh, 20px)' }}>
                 {q.type === 'listen-and-choose' ? (
                   <motion.button
                     whileHover={{ scale: 1.08 }}
@@ -420,8 +420,8 @@ export function QuizScreen() {
                     style={{
                       background: 'linear-gradient(135deg, #FF69B4, #E91E63)',
                       border: 'none', borderRadius: '50%',
-                      width: '90px', height: '90px',
-                      fontSize: '40px', cursor: 'pointer',
+                      width: 'clamp(60px, 18vw, 90px)', height: 'clamp(60px, 18vw, 90px)',
+                      fontSize: 'clamp(28px, 8vw, 40px)', cursor: 'pointer',
                       boxShadow: '0 6px 24px rgba(233,30,99,0.6)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       margin: '0 auto',
@@ -430,10 +430,10 @@ export function QuizScreen() {
                     🔊
                   </motion.button>
                 ) : q.type === 'picture-to-word' ? (
-                  <div style={{ fontSize: '80px', lineHeight: 1 }}>{q.prompt}</div>
+                  <div style={{ fontSize: 'clamp(50px, 15vw, 80px)', lineHeight: 1 }}>{q.prompt}</div>
                 ) : (
                   <div style={{
-                    fontFamily: 'var(--font-heading)', fontSize: '30px', fontWeight: 800,
+                    fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 6vw, 30px)', fontWeight: 800,
                     color: 'white', textShadow: '0 2px 12px rgba(255,105,180,0.8)',
                     letterSpacing: '1px',
                   }}>
@@ -441,7 +441,7 @@ export function QuizScreen() {
                   </div>
                 )}
 
-                <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>
+                <div style={{ fontSize: 'clamp(10px, 2.8vw, 13px)', color: 'rgba(255,255,255,0.5)', marginTop: '8px' }}>
                   {q.type === 'picture-to-word' ? 'What word is this?' :
                    q.type === 'word-to-picture' ? 'Which picture matches?' :
                    'Tap to listen — which picture is it?'}
@@ -452,7 +452,7 @@ export function QuizScreen() {
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gap: '10px',
+                gap: 'clamp(6px, 2vw, 10px)',
               }}>
                 {q.options.map((option, i) => {
                   const btnState = getButtonState(option);
@@ -471,7 +471,7 @@ export function QuizScreen() {
                       onClick={() => handleAnswer(option)}
                       disabled={answered}
                       style={{
-                        padding: '14px 8px',
+                        padding: 'clamp(8px, 2vh, 14px) clamp(6px, 2vw, 8px)',
                         background: btnState === 'correct'
                           ? 'linear-gradient(135deg, #4CAF50, #2E7D32)'
                           : btnState === 'wrong'
@@ -488,14 +488,14 @@ export function QuizScreen() {
                         borderRadius: '18px',
                         color: btnState === 'dimmed' ? 'rgba(255,255,255,0.3)' : 'white',
                         fontFamily: q.type === 'picture-to-word' ? 'var(--font-heading)' : 'var(--font-body)',
-                        fontSize: q.type === 'word-to-picture' || q.type === 'listen-and-choose' ? '36px' : '16px',
+                        fontSize: q.type === 'word-to-picture' || q.type === 'listen-and-choose' ? 'clamp(24px, 8vw, 36px)' : 'clamp(13px, 3.5vw, 16px)',
                         fontWeight: 700,
                         cursor: answered ? 'default' : 'pointer',
                         boxShadow: btnState === 'idle' ? `0 4px 16px ${col.shadow}` :
                                    btnState === 'correct' ? '0 4px 20px rgba(76,175,80,0.6)' :
                                    btnState === 'wrong' ? '0 4px 20px rgba(255,82,82,0.6)' : 'none',
                         transition: 'background 0.2s, border-color 0.2s',
-                        minHeight: '64px',
+                        minHeight: 'clamp(48px, 14vw, 64px)',
                       }}
                     >
                       {option}
@@ -522,8 +522,8 @@ export function QuizScreen() {
                   background: isCorrect
                     ? 'linear-gradient(135deg, #4CAF50, #2E7D32)'
                     : 'linear-gradient(135deg, #FF8FAB, #E91E63)',
-                  color: 'white', borderRadius: '16px', padding: '8px 20px',
-                  fontSize: '15px', fontWeight: 700,
+                  color: 'white', borderRadius: '16px', padding: 'clamp(6px, 1.5vh, 8px) clamp(12px, 4vw, 20px)',
+                  fontSize: 'clamp(12px, 3.5vw, 15px)', fontWeight: 700,
                   boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
                 }}
               >

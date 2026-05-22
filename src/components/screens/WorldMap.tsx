@@ -10,13 +10,12 @@ function ProgressRing({
   earned,
   max,
   color,
-  size = 80,
 }: {
   earned: number;
   max: number;
   color: string;
-  size?: number;
 }) {
+  const size = 80;
   const radius = (size - 10) / 2;
   const circumference = 2 * Math.PI * radius;
   const progress = max > 0 ? Math.min(earned / max, 1) : 0;
@@ -24,8 +23,9 @@ function ProgressRing({
 
   return (
     <svg
-      width={size}
-      height={size}
+      width="100%"
+      height="100%"
+      viewBox={`0 0 ${size} ${size}`}
       style={{ position: 'absolute', top: 0, left: 0, transform: 'rotate(-90deg)' }}
     >
       {/* Track */}
@@ -146,7 +146,7 @@ export function WorldMap() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '16px 20px 12px',
+          padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 12px)',
           background: 'rgba(255,255,255,0.45)',
           backdropFilter: 'blur(12px)',
           borderBottom: '2px solid rgba(255,182,193,0.4)',
@@ -160,9 +160,9 @@ export function WorldMap() {
             background: 'linear-gradient(135deg, #FF69B4, #E91E63)',
             border: 'none',
             borderRadius: 'var(--radius-md)',
-            width: '42px',
-            height: '42px',
-            fontSize: '18px',
+            width: 'clamp(34px, 9vw, 42px)',
+            height: 'clamp(34px, 9vw, 42px)',
+            fontSize: 'clamp(14px, 4vw, 18px)',
             cursor: 'pointer',
             color: 'white',
             boxShadow: '0 3px 12px rgba(233,30,99,0.35)',
@@ -177,7 +177,7 @@ export function WorldMap() {
         <div
           style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: '20px',
+            fontSize: 'clamp(16px, 4.5vw, 20px)',
             color: '#E91E63',
             textShadow: '0 1px 4px rgba(233,30,99,0.2)',
             letterSpacing: '0.5px',
@@ -191,9 +191,9 @@ export function WorldMap() {
           style={{
             background: 'linear-gradient(135deg, #FFD700, #FF8C00)',
             borderRadius: 'var(--radius-lg)',
-            padding: '6px 14px',
+            padding: 'clamp(4px, 1vh, 6px) clamp(10px, 3vw, 14px)',
             fontFamily: 'var(--font-numbers)',
-            fontSize: '15px',
+            fontSize: 'clamp(12px, 3.5vw, 15px)',
             color: 'white',
             fontWeight: 700,
             boxShadow: '0 2px 10px rgba(255,165,0,0.4)',
@@ -208,7 +208,7 @@ export function WorldMap() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '20px 20px 40px',
+          padding: 'clamp(14px, 3.5vh, 20px) clamp(14px, 4vw, 20px) clamp(28px, 7vh, 40px)',
           position: 'relative',
           zIndex: 5,
         }}
@@ -248,7 +248,7 @@ export function WorldMap() {
                     transition={{ duration: 0.4, delay: index * 0.08 }}
                     style={{
                       width: '12px',
-                      height: '40px',
+                      height: 'clamp(28px, 7vh, 40px)',
                       background: `linear-gradient(180deg, ${RAINBOW_COLORS[index - 1]}, ${RAINBOW_COLORS[index]})`,
                       borderRadius: '6px',
                       boxShadow: `0 0 10px ${RAINBOW_COLORS[index]}60`,
@@ -266,7 +266,7 @@ export function WorldMap() {
                     display: 'flex',
                     flexDirection: isLeft ? 'row' : 'row-reverse',
                     alignItems: 'center',
-                    gap: '16px',
+                    gap: 'clamp(10px, 3vw, 16px)',
                     width: '100%',
                     padding: '4px 8px',
                   }}
@@ -290,8 +290,8 @@ export function WorldMap() {
                     transition={current ? { duration: 2, repeat: Infinity } : {}}
                     style={{
                       position: 'relative',
-                      width: '80px',
-                      height: '80px',
+                      width: 'clamp(60px, 18vw, 80px)',
+                      height: 'clamp(60px, 18vw, 80px)',
                       borderRadius: '50%',
                       background: unlocked
                         ? `radial-gradient(circle at 35% 35%, ${world.colors.secondary}, ${world.colors.primary})`
@@ -300,7 +300,7 @@ export function WorldMap() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontSize: '30px',
+                      fontSize: 'clamp(22px, 7vw, 30px)',
                       flexShrink: 0,
                       border: `3px solid ${unlocked ? 'rgba(255,255,255,0.7)' : 'rgba(200,200,200,0.5)'}`,
                       boxShadow: unlocked
@@ -310,7 +310,7 @@ export function WorldMap() {
                       transition: 'filter 0.2s',
                     }}
                   >
-                    <ProgressRing earned={earned} max={maxStars} color={unlocked ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.3)'} size={80} />
+                    <ProgressRing earned={earned} max={maxStars} color={unlocked ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.3)'} />
 
                     {/* World icon */}
                     <span style={{ position: 'relative', zIndex: 2, filter: unlocked ? 'none' : 'grayscale(1)' }}>
@@ -363,7 +363,7 @@ export function WorldMap() {
                         ? 'rgba(255,255,255,0.8)'
                         : 'rgba(220,210,230,0.6)',
                       borderRadius: 'var(--radius-md)',
-                      padding: '10px 14px',
+                      padding: 'clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px)',
                       boxShadow: '0 3px 14px rgba(0,0,0,0.1)',
                       border: `2px solid ${unlocked ? 'rgba(255,182,193,0.6)' : 'rgba(200,190,210,0.5)'}`,
                     }}
@@ -371,7 +371,7 @@ export function WorldMap() {
                     <div
                       style={{
                         fontFamily: 'var(--font-heading)',
-                        fontSize: '16px',
+                        fontSize: 'clamp(13px, 3.5vw, 16px)',
                         color: unlocked ? world.colors.primary : '#999',
                         marginBottom: '3px',
                         fontWeight: 700,
@@ -434,7 +434,7 @@ export function WorldMap() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.8, type: 'spring' }}
             style={{
-              marginTop: '24px',
+              marginTop: 'clamp(16px, 4vh, 24px)',
               textAlign: 'center',
               fontFamily: 'var(--font-heading)',
               fontSize: '24px',

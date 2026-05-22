@@ -22,7 +22,7 @@ export function SplashScreen() {
       width: '100%', height: '100%',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       background: 'linear-gradient(135deg, #FFB6C1, #FF69B4, #CE93D8)',
-      position: 'relative', overflow: 'hidden', gap: '20px',
+      position: 'relative', overflow: 'hidden', gap: 'clamp(14px, 3.5vh, 20px)',
     }}>
       <FloatingElements elements={['💖', '⭐', '🦋', '✨', '🌸', '🎀']} count={15} />
 
@@ -41,7 +41,7 @@ export function SplashScreen() {
         transition={{ delay: 0.5 }}
         style={{
           fontFamily: 'var(--font-heading)',
-          fontSize: '28px',
+          fontSize: 'clamp(22px, 6.5vw, 28px)',
           color: 'white',
           textAlign: 'center',
           textShadow: '0 2px 10px rgba(0,0,0,0.2)',
@@ -56,7 +56,7 @@ export function SplashScreen() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
         style={{
-          fontSize: '18px', color: 'rgba(255,255,255,0.9)',
+          fontSize: 'clamp(14px, 4vw, 18px)', color: 'rgba(255,255,255,0.9)',
           fontFamily: 'var(--font-body)', zIndex: 1,
         }}
       >

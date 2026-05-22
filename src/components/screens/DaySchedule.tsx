@@ -192,7 +192,7 @@ export function DaySchedule() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '16px 20px 12px',
+          padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 12px)',
           background: 'rgba(255,255,255,0.35)',
           backdropFilter: 'blur(12px)',
           borderBottom: '2px solid rgba(255,255,255,0.4)',
@@ -207,9 +207,9 @@ export function DaySchedule() {
             background: `linear-gradient(135deg, ${worldPrimary}, ${worldConfig?.colors.secondary ?? '#FF69B4'})`,
             border: 'none',
             borderRadius: 'var(--radius-md)',
-            width: '42px',
-            height: '42px',
-            fontSize: '18px',
+            width: 'clamp(34px, 9vw, 42px)',
+            height: 'clamp(34px, 9vw, 42px)',
+            fontSize: 'clamp(14px, 4vw, 18px)',
             cursor: 'pointer',
             color: 'white',
             boxShadow: `0 3px 12px ${worldPrimary}50`,
@@ -225,7 +225,7 @@ export function DaySchedule() {
           <div
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '22px',
+              fontSize: 'clamp(18px, 5vw, 22px)',
               color: worldPrimary,
               textShadow: '0 1px 4px rgba(0,0,0,0.12)',
             }}
@@ -267,10 +267,10 @@ export function DaySchedule() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '16px',
+          padding: 'clamp(12px, 3vh, 16px)',
           display: 'flex',
           flexDirection: 'column',
-          gap: '12px',
+          gap: 'clamp(8px, 2vh, 12px)',
           zIndex: 5,
           position: 'relative',
         }}
@@ -283,7 +283,7 @@ export function DaySchedule() {
           style={{
             textAlign: 'center',
             fontFamily: 'var(--font-heading)',
-            fontSize: '15px',
+            fontSize: 'clamp(12px, 3.5vw, 15px)',
             color: 'rgba(80,30,60,0.8)',
             marginBottom: '4px',
           }}
@@ -319,18 +319,18 @@ export function DaySchedule() {
               <div
                 style={{
                   background: phaseAvailable ? phase.bgGradient : 'linear-gradient(135deg, #ddd, #ccc)',
-                  padding: '10px 16px',
+                  padding: 'clamp(8px, 2vh, 10px) clamp(12px, 3vw, 16px)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  gap: 'clamp(8px, 2.5vw, 10px)',
                 }}
               >
-                <span style={{ fontSize: '26px' }}>{phase.timeEmoji}</span>
+                <span style={{ fontSize: 'clamp(20px, 6vw, 26px)' }}>{phase.timeEmoji}</span>
                 <div style={{ flex: 1 }}>
                   <div
                     style={{
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '16px',
+                      fontSize: 'clamp(13px, 3.5vw, 16px)',
                       color: phaseAvailable ? phase.accentColor : '#aaa',
                       fontWeight: 700,
                     }}
@@ -392,7 +392,7 @@ export function DaySchedule() {
                           : 'rgba(220,210,225,0.5)',
                         border: `2px solid ${available ? (done ? phase.accentColor + 'aa' : 'rgba(255,182,193,0.7)') : 'rgba(200,190,210,0.4)'}`,
                         borderRadius: 'var(--radius-md)',
-                        padding: '10px 8px',
+                        padding: 'clamp(8px, 2vh, 10px) clamp(6px, 2vw, 8px)',
                         cursor: available ? 'pointer' : 'not-allowed',
                         display: 'flex',
                         flexDirection: 'column',
@@ -410,7 +410,7 @@ export function DaySchedule() {
                       <div
                         style={{
                           fontFamily: 'var(--font-heading)',
-                          fontSize: '14px',
+                          fontSize: 'clamp(12px, 3vw, 14px)',
                           color: available ? phase.accentColor : '#bbb',
                           fontWeight: 700,
                         }}

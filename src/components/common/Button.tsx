@@ -25,9 +25,9 @@ export function Button({ onClick, children, variant = 'primary', size = 'medium'
   };
 
   const sizes = {
-    small: { padding: '8px 16px', fontSize: '14px' },
-    medium: { padding: '12px 24px', fontSize: '16px' },
-    large: { padding: '16px 36px', fontSize: '20px' },
+    small: { padding: 'clamp(6px, 1.5vh, 8px) clamp(12px, 4vw, 16px)', fontSize: 'clamp(12px, 3vw, 14px)' },
+    medium: { padding: 'clamp(10px, 2vh, 12px) clamp(18px, 5vw, 24px)', fontSize: 'clamp(14px, 3.5vw, 16px)' },
+    large: { padding: 'clamp(12px, 2.5vh, 16px) clamp(28px, 8vw, 36px)', fontSize: 'clamp(16px, 4.5vw, 20px)' },
   };
 
   const variants = {

@@ -21,6 +21,23 @@
   --radius-md: 20px;
   --radius-lg: 30px;
   --radius-full: 50%;
+
+  --spacing-xs: clamp(4px, 1vw, 8px);
+  --spacing-sm: clamp(8px, 2vw, 14px);
+  --spacing-md: clamp(12px, 3vw, 20px);
+  --spacing-lg: clamp(16px, 4vw, 28px);
+  --spacing-xl: clamp(20px, 5vw, 36px);
+
+  --font-xs: clamp(10px, 2.2vw, 12px);
+  --font-sm: clamp(12px, 2.8vw, 14px);
+  --font-md: clamp(14px, 3.5vw, 18px);
+  --font-lg: clamp(18px, 4.5vw, 24px);
+  --font-xl: clamp(22px, 5.5vw, 30px);
+  --font-xxl: clamp(26px, 7vw, 36px);
+
+  --btn-sm: clamp(32px, 8vw, 40px);
+  --btn-md: clamp(36px, 9vw, 48px);
+  --btn-lg: clamp(44px, 11vw, 56px);
 }
 
 * {
@@ -31,6 +48,7 @@
 
 html, body {
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -48,6 +66,7 @@ body {
 #root {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
   position: relative;
 }

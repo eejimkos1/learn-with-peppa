@@ -86,7 +86,7 @@ export function PictureExplorer() {
 
   if (!world || !scene) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
         <p>Loading scene...</p>
       </div>
     );
@@ -171,7 +171,8 @@ export function PictureExplorer() {
   return (
     <div
       style={{
-        minHeight: '100vh',
+        width: '100%',
+        height: '100%',
         background: safeScene.background,
         display: 'flex',
         flexDirection: 'column',
@@ -187,7 +188,7 @@ export function PictureExplorer() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '12px 16px',
+          padding: 'clamp(8px, 2vh, 12px) clamp(12px, 3vw, 16px)',
           background: 'rgba(255,255,255,0.65)',
           backdropFilter: 'blur(8px)',
           borderBottom: '2px solid #FFB6C1',
@@ -202,8 +203,8 @@ export function PictureExplorer() {
             background: 'rgba(255,255,255,0.8)',
             border: '2px solid #FFB6C1',
             borderRadius: '50%',
-            width: '38px', height: '38px',
-            fontSize: '18px',
+            width: 'clamp(32px, 8vw, 38px)', height: 'clamp(32px, 8vw, 38px)',
+            fontSize: 'clamp(14px, 4vw, 18px)',
             cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
@@ -215,7 +216,7 @@ export function PictureExplorer() {
         <div
           style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: '17px',
+            fontSize: 'clamp(14px, 3.5vw, 17px)',
             color: primaryColor,
             fontWeight: 700,
           }}
@@ -266,8 +267,8 @@ export function PictureExplorer() {
             animate={{ opacity: 1, height: 'auto' }}
             style={{
               display: 'flex',
-              gap: '6px',
-              padding: '8px 14px',
+              gap: 'clamp(4px, 1.5vw, 6px)',
+              padding: 'clamp(6px, 1.5vh, 8px) clamp(10px, 3vw, 14px)',
               flexWrap: 'wrap',
               background: 'rgba(255,255,255,0.55)',
               borderBottom: '1px solid rgba(255,182,193,0.4)',
@@ -365,8 +366,8 @@ export function PictureExplorer() {
         style={{
           display: 'flex',
           alignItems: 'flex-end',
-          gap: '10px',
-          padding: '12px 16px',
+          gap: 'clamp(8px, 2vw, 10px)',
+          padding: 'clamp(8px, 2vh, 12px) clamp(12px, 3vw, 16px)',
           background: 'rgba(255,255,255,0.7)',
           backdropFilter: 'blur(8px)',
           borderTop: '2px solid #FFB6C1',

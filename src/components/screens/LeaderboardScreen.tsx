@@ -15,20 +15,20 @@ export function LeaderboardScreen() {
     <div style={{
       width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
       alignItems: 'center', background: 'linear-gradient(180deg, #FFF0F5, #CE93D8)',
-      position: 'relative', overflow: 'hidden', padding: '20px',
+      position: 'relative', overflow: 'hidden', padding: 'clamp(14px, 3.5vh, 20px)',
     }}>
       <FloatingElements elements={['🏆', '🥇', '⭐', '🌟', '💖']} count={8} />
 
       <motion.h1
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', color: '#E91E63', textAlign: 'center', marginBottom: '20px', zIndex: 1 }}
+        style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 6vw, 26px)', color: '#E91E63', textAlign: 'center', marginBottom: 'clamp(14px, 3vh, 20px)', zIndex: 1 }}
       >
         Κατάταξη 🏆
       </motion.h1>
 
       <div style={{
-        width: '100%', maxWidth: '350px', flex: 1, overflowY: 'auto',
-        display: 'flex', flexDirection: 'column', gap: '10px', zIndex: 1, paddingBottom: '20px',
+        width: '100%', maxWidth: 'min(350px, 95%)', flex: 1, overflowY: 'auto',
+        display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vh, 10px)', zIndex: 1, paddingBottom: 'clamp(14px, 3.5vh, 20px)',
       }}>
         {entries.length === 0 ? (
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -43,7 +43,7 @@ export function LeaderboardScreen() {
               transition={{ delay: i * 0.1 }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '12px',
-                padding: '14px 18px', borderRadius: 'var(--radius-md)',
+                padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 18px)', borderRadius: 'var(--radius-md)',
                 background: entry.username === currentUser
                   ? 'linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(206, 147, 216, 0.3))'
                   : 'rgba(255, 255, 255, 0.7)',

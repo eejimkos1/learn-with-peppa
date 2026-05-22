@@ -51,10 +51,9 @@ export function HomeScreen() {
         alignItems: 'center',
         justifyContent: 'space-between',
         overflow: 'hidden',
-        padding: '20px 16px',
+        padding: 'clamp(12px, 3vh, 20px) clamp(12px, 4vw, 16px)',
       }}
     >
-      {/* Animated sparkle overlay */}
       <div
         style={{
           position: 'absolute',
@@ -68,7 +67,6 @@ export function HomeScreen() {
 
       <FloatingElements elements={HOME_ELEMENTS} count={18} />
 
-      {/* TOP BAR */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,22 +80,20 @@ export function HomeScreen() {
           position: 'relative',
         }}
       >
-        {/* Title */}
         <div
           style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: '15px',
+            fontSize: 'clamp(13px, 3.5vw, 15px)',
             color: 'white',
             textShadow: '0 1px 4px rgba(0,0,0,0.3)',
             lineHeight: 1.2,
           }}
         >
-          <div style={{ fontSize: '11px', opacity: 0.85 }}>Μαθαίνω με την</div>
-          <div style={{ fontSize: '18px', fontWeight: 700 }}>Πέπα 🐷</div>
+          <div style={{ fontSize: 'clamp(9px, 2.5vw, 11px)', opacity: 0.85 }}>Μαθαίνω με την</div>
+          <div style={{ fontSize: 'clamp(15px, 4vw, 18px)', fontWeight: 700 }}>Πέπα 🐷</div>
         </div>
 
-        {/* Star counter + Sync */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(6px, 2vw, 8px)' }}>
           <SyncIndicator />
           <motion.div
             animate={{ scale: [1, 1.05, 1] }}
@@ -106,7 +102,7 @@ export function HomeScreen() {
               background: 'rgba(255,255,255,0.25)',
               backdropFilter: 'blur(8px)',
               borderRadius: 'var(--radius-lg)',
-              padding: '6px 14px',
+              padding: 'clamp(4px, 1vh, 6px) clamp(10px, 3vw, 14px)',
               border: '2px solid rgba(255,255,255,0.5)',
               boxShadow: '0 2px 12px rgba(255,215,0,0.3)',
             }}
@@ -116,7 +112,6 @@ export function HomeScreen() {
         </div>
       </motion.div>
 
-      {/* GREETING */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -131,10 +126,10 @@ export function HomeScreen() {
             background: 'rgba(255,255,255,0.28)',
             backdropFilter: 'blur(10px)',
             borderRadius: 'var(--radius-lg)',
-            padding: '8px 22px',
+            padding: 'clamp(6px, 1.5vh, 8px) clamp(14px, 5vw, 22px)',
             border: '2px solid rgba(255,255,255,0.5)',
             fontFamily: 'var(--font-heading)',
-            fontSize: '18px',
+            fontSize: 'clamp(15px, 4vw, 18px)',
             color: 'white',
             textShadow: '0 1px 6px rgba(0,0,0,0.25)',
             boxShadow: '0 4px 20px rgba(233,30,99,0.2)',
@@ -144,7 +139,6 @@ export function HomeScreen() {
         </div>
       </motion.div>
 
-      {/* PEPPA CHARACTER */}
       <motion.div
         initial={{ opacity: 0, scale: 0, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -155,10 +149,9 @@ export function HomeScreen() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '8px',
+          gap: 'clamp(6px, 1.5vh, 8px)',
         }}
       >
-        {/* Glow ring behind Peppa */}
         <motion.div
           animate={{
             boxShadow: [
@@ -170,15 +163,14 @@ export function HomeScreen() {
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           style={{
             position: 'absolute',
-            width: '140px',
-            height: '140px',
+            width: 'clamp(100px, 30vw, 140px)',
+            height: 'clamp(100px, 30vw, 140px)',
             borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(255,105,180,0.25) 0%, transparent 70%)',
           }}
         />
         <PeppaCharacter mood="happy" size="large" equippedItems={state.progress.equippedItems} />
 
-        {/* Sparkles around Peppa */}
         {['✨', '💫', '⭐'].map((spark, i) => (
           <motion.span
             key={i}
@@ -206,12 +198,11 @@ export function HomeScreen() {
         ))}
       </motion.div>
 
-      {/* PLAY BUTTON */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.35 }}
-        style={{ zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}
+        style={{ zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(10px, 2.5vh, 16px)' }}
       >
         <motion.div
           animate={{ scale: [1, 1.06, 1] }}
@@ -227,8 +218,8 @@ export function HomeScreen() {
               animation: 'gradientShift 3s ease infinite',
               border: '4px solid rgba(255,255,255,0.6)',
               borderRadius: 'var(--radius-lg)',
-              padding: '18px 52px',
-              fontSize: '26px',
+              padding: 'clamp(12px, 2.5vh, 18px) clamp(32px, 12vw, 52px)',
+              fontSize: 'clamp(20px, 5.5vw, 26px)',
               fontFamily: 'var(--font-heading)',
               fontWeight: 700,
               color: 'white',
@@ -242,8 +233,7 @@ export function HomeScreen() {
           </motion.button>
         </motion.div>
 
-        {/* Small nav buttons */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 'clamp(8px, 2.5vw, 12px)', alignItems: 'center' }}>
           {[
             { emoji: '⚙️', label: 'Settings', handler: handleSettings },
             { emoji: '🏆', label: 'Trophies', handler: handleTrophies },
@@ -261,9 +251,9 @@ export function HomeScreen() {
                 backdropFilter: 'blur(8px)',
                 border: '2px solid rgba(255,255,255,0.55)',
                 borderRadius: 'var(--radius-md)',
-                width: '56px',
-                height: '56px',
-                fontSize: '22px',
+                width: 'clamp(42px, 12vw, 56px)',
+                height: 'clamp(42px, 12vw, 56px)',
+                fontSize: 'clamp(18px, 5vw, 22px)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -277,7 +267,6 @@ export function HomeScreen() {
         </div>
       </motion.div>
 
-      {/* LOGOUT BUTTON */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -292,8 +281,8 @@ export function HomeScreen() {
             background: 'rgba(255,255,255,0.15)',
             border: '1.5px solid rgba(255,255,255,0.35)',
             borderRadius: 'var(--radius-sm)',
-            padding: '6px 16px',
-            fontSize: '12px',
+            padding: 'clamp(4px, 1vh, 6px) clamp(10px, 4vw, 16px)',
+            fontSize: 'clamp(10px, 2.8vw, 12px)',
             fontFamily: 'var(--font-body)',
             color: 'rgba(255,255,255,0.8)',
             cursor: 'pointer',

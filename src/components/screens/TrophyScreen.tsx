@@ -12,20 +12,20 @@ export function TrophyScreen() {
     <div style={{
       width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
       alignItems: 'center', background: 'linear-gradient(180deg, #FFF0F5, #FFB6C1)',
-      position: 'relative', overflow: 'auto', padding: '20px',
+      position: 'relative', overflow: 'auto', padding: 'clamp(14px, 3.5vh, 20px) clamp(14px, 4vw, 20px)',
     }}>
       <FloatingElements elements={['🏆', '👑', '⭐', '🎀', '✨']} count={8} />
 
       <motion.h1
         initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-        style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', color: '#E91E63', marginBottom: '20px', zIndex: 1 }}
+        style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 6vw, 26px)', color: '#E91E63', marginBottom: 'clamp(14px, 3vh, 20px)', zIndex: 1 }}
       >
         Τα Βραβεία μου 🏆
       </motion.h1>
 
       <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px',
-        width: '100%', maxWidth: '350px', zIndex: 1, paddingBottom: '80px',
+        display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'clamp(8px, 2.5vw, 12px)',
+        width: '100%', maxWidth: 'min(350px, 95%)', zIndex: 1, paddingBottom: 'clamp(60px, 15vh, 80px)',
       }}>
         {REWARDS.map((reward, i) => {
           const unlocked = unlockedIds.includes(reward.id);
@@ -37,16 +37,16 @@ export function TrophyScreen() {
               transition={{ delay: i * 0.05 }}
               style={{
                 background: unlocked ? 'rgba(255,255,255,0.9)' : 'rgba(255,182,193,0.3)',
-                borderRadius: 'var(--radius-md)', padding: '12px',
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
+                borderRadius: 'var(--radius-md)', padding: 'clamp(8px, 2vh, 12px)',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'clamp(4px, 1vh, 6px)',
                 border: unlocked ? '2px solid #FFD700' : '2px solid rgba(255,105,180,0.3)',
                 boxShadow: unlocked ? '0 2px 10px rgba(255,215,0,0.3)' : 'none',
               }}
             >
-              <span style={{ fontSize: '28px', filter: unlocked ? 'none' : 'grayscale(1) blur(2px)' }}>
+              <span style={{ fontSize: 'clamp(22px, 7vw, 28px)', filter: unlocked ? 'none' : 'grayscale(1) blur(2px)' }}>
                 {unlocked ? reward.icon : '❓'}
               </span>
-              <span style={{ fontSize: '10px', textAlign: 'center', fontFamily: 'var(--font-body)', color: unlocked ? '#E91E63' : '#999' }}>
+              <span style={{ fontSize: 'clamp(9px, 2.5vw, 10px)', textAlign: 'center', fontFamily: 'var(--font-body)', color: unlocked ? '#E91E63' : '#999' }}>
                 {unlocked ? reward.name : `${reward.starsRequired} ⭐`}
               </span>
             </motion.div>
@@ -54,7 +54,7 @@ export function TrophyScreen() {
         })}
       </div>
 
-      <div style={{ position: 'fixed', bottom: '20px', zIndex: 2, display: 'flex', gap: '10px' }}>
+      <div style={{ position: 'sticky', bottom: 'clamp(12px, 3vh, 20px)', zIndex: 2, display: 'flex', gap: 'clamp(8px, 2.5vw, 10px)' }}>
         <Button onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'dressUp' })} variant="primary" size="medium">
           🎀 Ντύσε την Πέπα!
         </Button>

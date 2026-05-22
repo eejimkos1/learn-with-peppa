@@ -35,7 +35,7 @@ export function DressUpScreen() {
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         style={{
-          width: '100%', padding: '16px 20px 12px',
+          width: '100%', padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 12px)',
           background: 'linear-gradient(135deg, rgba(206,147,216,0.9), rgba(233,30,99,0.85))',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 4px 20px rgba(206,147,216,0.4)', zIndex: 2,
@@ -46,15 +46,15 @@ export function DressUpScreen() {
           onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'home' })}
           style={{
             background: 'rgba(255,255,255,0.3)', border: 'none', borderRadius: '50%',
-            width: '36px', height: '36px', fontSize: '18px', cursor: 'pointer', color: 'white',
+            width: 'clamp(30px, 8vw, 36px)', height: 'clamp(30px, 8vw, 36px)', fontSize: 'clamp(14px, 4vw, 18px)', cursor: 'pointer', color: 'white',
           }}
         >
           ←
         </motion.button>
-        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', color: 'white', fontWeight: 800 }}>
+        <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(14px, 4vw, 18px)', color: 'white', fontWeight: 800 }}>
           🎀 Ντύσε την Πέπα!
         </div>
-        <div style={{ width: '36px' }} />
+        <div style={{ width: 'clamp(30px, 8vw, 36px)' }} />
       </motion.div>
 
       {/* Peppa preview */}
@@ -63,7 +63,7 @@ export function DressUpScreen() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 180, damping: 16, delay: 0.2 }}
         style={{
-          marginTop: '24px', marginBottom: '16px', zIndex: 1,
+          marginTop: 'clamp(16px, 4vh, 24px)', marginBottom: 'clamp(10px, 2.5vh, 16px)', zIndex: 1,
           position: 'relative',
         }}
       >
@@ -86,7 +86,7 @@ export function DressUpScreen() {
 
       {/* Slot indicators */}
       <div style={{
-        display: 'flex', gap: '8px', marginBottom: '12px', zIndex: 1, flexWrap: 'wrap', justifyContent: 'center',
+        display: 'flex', gap: 'clamp(6px, 2vw, 8px)', marginBottom: 'clamp(8px, 2vh, 12px)', zIndex: 1, flexWrap: 'wrap', justifyContent: 'center',
       }}>
         {(['head', 'body', 'feet', 'back', 'hand'] as ItemSlot[]).map(slot => {
           const equipped = equippedItems[slot];
@@ -100,11 +100,11 @@ export function DressUpScreen() {
               whileTap={equipped ? { scale: 0.9 } : {}}
               onClick={() => equipped && dispatch({ type: 'UNEQUIP_ITEM', slot })}
               style={{
-                width: '44px', height: '44px', borderRadius: '12px',
+                width: 'clamp(36px, 10vw, 44px)', height: 'clamp(36px, 10vw, 44px)', borderRadius: '12px',
                 background: equipped ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)',
                 border: equipped ? '2px solid #FFD700' : '2px dashed rgba(233,30,99,0.4)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '20px', cursor: equipped ? 'pointer' : 'default',
+                fontSize: 'clamp(16px, 4.5vw, 20px)', cursor: equipped ? 'pointer' : 'default',
                 boxShadow: equipped ? '0 2px 8px rgba(255,215,0,0.4)' : 'none',
               }}
               title={equipped ? `${reward?.name} (tap to remove)` : slot}
@@ -117,7 +117,7 @@ export function DressUpScreen() {
 
       {/* Items grid */}
       <div style={{
-        flex: 1, width: '100%', overflowY: 'auto', padding: '0 16px 80px',
+        flex: 1, width: '100%', overflowY: 'auto', padding: '0 clamp(12px, 3vw, 16px) clamp(60px, 15vh, 80px)',
         zIndex: 1,
       }}>
         {wearableRewards.length === 0 ? (
@@ -136,8 +136,8 @@ export function DressUpScreen() {
           </motion.div>
         ) : (
           <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px',
-            maxWidth: '360px', margin: '0 auto',
+            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'clamp(8px, 2.5vw, 10px)',
+            maxWidth: 'min(360px, 100%)', margin: '0 auto',
           }}>
             {wearableRewards.map((reward, i) => {
               const isEquipped = equippedItems[reward.slot!] === reward.id;
@@ -156,7 +156,7 @@ export function DressUpScreen() {
                       : 'rgba(255,255,255,0.85)',
                     border: isEquipped ? '3px solid #FFD700' : '2px solid rgba(233,30,99,0.3)',
                     borderRadius: '16px',
-                    padding: '14px 8px',
+                    padding: 'clamp(10px, 2.5vh, 14px) clamp(6px, 2vw, 8px)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
                     cursor: 'pointer',
                     boxShadow: isEquipped
@@ -183,7 +183,7 @@ export function DressUpScreen() {
       </div>
 
       {/* Bottom button */}
-      <div style={{ position: 'fixed', bottom: '20px', zIndex: 2 }}>
+      <div style={{ position: 'sticky', bottom: 'clamp(12px, 3vh, 20px)', zIndex: 2 }}>
         <Button onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'home' })} variant="secondary" size="medium">
           Πίσω 🔙
         </Button>

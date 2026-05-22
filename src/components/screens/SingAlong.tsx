@@ -164,7 +164,7 @@ export function SingAlong() {
     return (
       <div key={lineIdx} style={{
         display: 'flex', flexWrap: 'wrap', justifyContent: 'center',
-        gap: '6px', marginBottom: '10px',
+        gap: '6px', marginBottom: 'clamp(6px, 1.5vh, 10px)',
       }}>
         {words.map((word, wIdx) => {
           const blankKey = `${lineIdx}-${wIdx}`;
@@ -189,7 +189,7 @@ export function SingAlong() {
                   borderRadius: '12px',
                   padding: '2px 10px',
                   fontWeight: 700,
-                  fontSize: '18px',
+                  fontSize: 'clamp(15px, 4vw, 18px)',
                   minWidth: '60px',
                   textAlign: 'center',
                   border: isActiveBlank ? '2px dashed #FF8C00' : '2px dashed #FF69B4',
@@ -212,7 +212,7 @@ export function SingAlong() {
               transition={{ duration: 0.3 }}
               style={{
                 display: 'inline-block',
-                fontSize: '20px',
+                fontSize: 'clamp(16px, 4.5vw, 20px)',
                 fontWeight: isHighlighted ? 800 : 600,
                 color: isHighlighted ? '#FF1493' : lineIdx === currentLine && mode === 'learn' ? '#C2185B' : '#9E9E9E',
                 background: isHighlighted ? 'rgba(255,20,147,0.15)' : 'transparent',
@@ -246,7 +246,7 @@ export function SingAlong() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
         style={{
-          width: '100%', padding: '16px 20px 12px',
+          width: '100%', padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 20px) clamp(8px, 2vh, 12px)',
           background: 'linear-gradient(135deg, rgba(255,105,180,0.9), rgba(233,30,99,0.9))',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           boxShadow: '0 4px 20px rgba(233,30,99,0.3)', zIndex: 2,
@@ -257,13 +257,13 @@ export function SingAlong() {
           onClick={() => dispatch({ type: 'SET_SCREEN', screen: 'daySchedule' })}
           style={{
             background: 'rgba(255,255,255,0.3)', border: 'none', borderRadius: '50%',
-            width: '36px', height: '36px', fontSize: '18px', cursor: 'pointer', color: 'white',
+            width: 'clamp(30px, 8vw, 36px)', height: 'clamp(30px, 8vw, 36px)', fontSize: 'clamp(14px, 4vw, 18px)', cursor: 'pointer', color: 'white',
           }}
         >
           ←
         </motion.button>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', color: 'white', fontWeight: 800 }}>
+          <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(13px, 3.5vw, 16px)', color: 'white', fontWeight: 800 }}>
             {mode === 'learn' ? '🎵 Sing Along!' : '✏️ Fill in the Blanks!'}
           </div>
           <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.85)' }}>
@@ -274,15 +274,15 @@ export function SingAlong() {
       </motion.div>
 
       {/* Song card */}
-      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '16px 20px', overflowY: 'auto', zIndex: 1 }}>
+      <div style={{ flex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 'clamp(10px, 2.5vh, 16px) clamp(14px, 4vw, 20px)', overflowY: 'auto', zIndex: 1 }}>
 
         {/* Peppa + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(10px, 3vw, 16px)', marginBottom: 'clamp(10px, 2.5vh, 16px)' }}>
           <motion.div key={peppaKey}>
             <PeppaCharacter mood={isPlaying ? 'excited' : completed ? 'excited' : 'happy'} size="medium" />
           </motion.div>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontFamily: 'var(--font-heading)', fontSize: '14px', color: '#E91E63', fontWeight: 800 }}>
+            <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(12px, 3vw, 14px)', color: '#E91E63', fontWeight: 800 }}>
               {song.titleGreek}
             </div>
             <div style={{ fontSize: '13px', color: '#9E9E9E' }}>
@@ -334,7 +334,7 @@ export function SingAlong() {
           style={{
             width: '100%', maxWidth: '480px',
             background: 'rgba(255,255,255,0.85)',
-            borderRadius: '24px', padding: '20px 24px',
+            borderRadius: '20px', padding: 'clamp(14px, 3.5vh, 20px) clamp(16px, 5vw, 24px)',
             boxShadow: '0 8px 32px rgba(233,30,99,0.15)',
             border: '3px solid rgba(255,105,180,0.3)',
             backdropFilter: 'blur(8px)',
@@ -372,11 +372,11 @@ export function SingAlong() {
                     whileTap={{ scale: 0.94 }}
                     onClick={() => handleBlankAnswer(opt)}
                     style={{
-                      padding: '12px 24px',
+                      padding: 'clamp(8px, 2vh, 12px) clamp(16px, 5vw, 24px)',
                       background: col.bg,
                       border: 'none', borderRadius: '16px',
                       color: 'white', fontFamily: 'var(--font-heading)',
-                      fontSize: '18px', fontWeight: 700,
+                      fontSize: 'clamp(15px, 4vw, 18px)', fontWeight: 700,
                       cursor: 'pointer',
                       boxShadow: `0 4px 16px ${col.shadow}`,
                       minWidth: '100px',
@@ -405,10 +405,10 @@ export function SingAlong() {
                 marginBottom: '16px',
               }}
             >
-              <div style={{ fontSize: '40px', marginBottom: '8px' }}>
+              <div style={{ fontSize: 'clamp(30px, 10vw, 40px)', marginBottom: '8px' }}>
                 {score >= totalBlanks ? '🌟🌟🌟' : score >= Math.ceil(totalBlanks * 0.7) ? '🌟🌟' : '🌟'}
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '22px', fontWeight: 800 }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(16px, 5vw, 22px)', fontWeight: 800 }}>
                 {score >= totalBlanks ? 'PERFECT! ΤΕΛΕΙΑ!' : 'Good job! Μπράβο!'}
               </div>
               <div style={{ fontSize: '15px', opacity: 0.9, marginTop: '4px' }}>

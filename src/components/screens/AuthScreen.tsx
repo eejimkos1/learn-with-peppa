@@ -39,7 +39,7 @@ export function AuthScreen() {
       width: '100%', height: '100%',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       background: 'linear-gradient(135deg, #FFF0F5, #FFB6C1, #FF69B4)',
-      position: 'relative', overflow: 'hidden', padding: '20px', gap: '16px',
+      position: 'relative', overflow: 'hidden', padding: 'clamp(14px, 3.5vh, 20px)', gap: 'clamp(12px, 3vh, 16px)',
     }}>
       <FloatingElements elements={['💖', '🌸', '⭐', '🎀', '✨']} count={10} />
 
@@ -52,7 +52,7 @@ export function AuthScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
         style={{
-          fontFamily: 'var(--font-heading)', fontSize: '24px',
+          fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 5.5vw, 24px)',
           color: '#E91E63', textAlign: 'center', zIndex: 1,
         }}
       >
@@ -63,13 +63,13 @@ export function AuthScreen() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        style={{ zIndex: 1, width: '100%', maxWidth: '280px', display: 'flex', flexDirection: 'column', gap: '12px' }}
+        style={{ zIndex: 1, width: '100%', maxWidth: 'min(280px, 85%)', display: 'flex', flexDirection: 'column', gap: 'clamp(8px, 2vh, 12px)' }}
       >
         <input
           type="text" value={name} onChange={(e) => setName(e.target.value)}
           onKeyDown={handleKeyDown} placeholder="Όνομα 💖" maxLength={20}
           style={{
-            width: '100%', padding: '14px 18px', borderRadius: 'var(--radius-md)',
+            width: '100%', padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 18px)', borderRadius: 'var(--radius-md)',
             border: '2px solid #FF69B4', background: 'rgba(255,255,255,0.9)',
             color: '#E91E63', fontSize: '16px', fontFamily: 'var(--font-body)',
             textAlign: 'center', outline: 'none',
@@ -79,7 +79,7 @@ export function AuthScreen() {
           type="password" value={password} onChange={(e) => setPassword(e.target.value)}
           onKeyDown={handleKeyDown} placeholder="Κωδικός (4-8) 🔑" maxLength={8}
           style={{
-            width: '100%', padding: '14px 18px', borderRadius: 'var(--radius-md)',
+            width: '100%', padding: 'clamp(10px, 2.5vh, 14px) clamp(14px, 4vw, 18px)', borderRadius: 'var(--radius-md)',
             border: '2px solid #FF69B4', background: 'rgba(255,255,255,0.9)',
             color: '#E91E63', fontSize: '16px', fontFamily: 'var(--font-body)',
             textAlign: 'center', outline: 'none',
