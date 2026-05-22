@@ -4,6 +4,7 @@ import { GameProvider, useGame } from './context/GameContext';
 import { AudioProvider, unlockAudioContext } from './context/AudioContext';
 import { UserProvider, useUser } from './context/UserContext';
 import { initSpeechOnUserGesture } from './utils/synthAudio';
+import { startMusic, unlockMusicContext, duckMusic, unduckMusic } from './utils/music';
 import { SplashScreen } from './components/screens/SplashScreen';
 import { AuthScreen } from './components/screens/AuthScreen';
 import { HomeScreen } from './components/screens/HomeScreen';
@@ -23,6 +24,17 @@ import { HangmanScreen } from './components/screens/HangmanScreen';
 
 function GameRouter() {
   const { state } = useGame();
+
+  const gameScreens = ['showAndTell', 'pictureExplorer', 'singAlong', 'quiz', 'scenePicker', 'hangman'];
+  const isGameScreen = gameScreens.includes(state.screen);
+
+  useEffect(() => {
+    if (isGameScreen) {
+      duckMusic();
+    } else {
+      unduckMusic();
+    }
+  }, [isGameScreen]);
 
   const screens: Record<string, JSX.Element> = {
     splash: <SplashScreen />,
@@ -73,6 +85,8 @@ export default function App() {
     const unlock = () => {
       initSpeechOnUserGesture();
       unlockAudioContext();
+      unlockMusicContext();
+      startMusic();
       document.removeEventListener('touchstart', unlock);
       document.removeEventListener('click', unlock);
     };

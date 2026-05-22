@@ -1,6 +1,6 @@
-import { createContext, useContext, useCallback, useRef, ReactNode, useEffect } from 'react';
-import { Howl } from 'howler';
+import { createContext, useContext, useCallback, ReactNode, useEffect } from 'react';
 import { useGame } from './GameContext';
+import { startMusic, stopMusic, setMusicVolume, isMusicPlaying, unlockMusicContext } from '../utils/music';
 
 interface AudioContextType {
   playCorrect: () => void;
@@ -36,11 +36,11 @@ export function unlockAudioContext(): void {
   if (ctx && ctx.state === 'suspended') {
     ctx.resume();
   }
+  unlockMusicContext();
 }
 
 export function AudioProvider({ children }: { children: ReactNode }) {
   const { state } = useGame();
-  const musicRef = useRef<Howl | null>(null);
 
   const playTone = useCallback((frequency: number, duration: number, type: OscillatorType = 'sine') => {
     if (!state.settings.sfxEnabled) return;
@@ -94,22 +94,29 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }, [playTone]);
 
   const toggleMusic = useCallback(() => {
-    if (musicRef.current) {
-      if (musicRef.current.playing()) {
-        musicRef.current.pause();
-      } else {
-        musicRef.current.play();
-      }
+    if (isMusicPlaying()) {
+      stopMusic();
+    } else {
+      startMusic();
     }
   }, []);
 
   const setVolume = useCallback((vol: number) => {
-    if (musicRef.current) musicRef.current.volume(vol);
+    setMusicVolume(vol);
   }, []);
 
   useEffect(() => {
-    setVolume(state.settings.volume);
-  }, [state.settings.volume, setVolume]);
+    setMusicVolume(state.settings.volume);
+  }, [state.settings.volume]);
+
+  // Auto-start music when music is enabled
+  useEffect(() => {
+    if (state.settings.musicEnabled && !isMusicPlaying()) {
+      startMusic();
+    } else if (!state.settings.musicEnabled && isMusicPlaying()) {
+      stopMusic();
+    }
+  }, [state.settings.musicEnabled]);
 
   return (
     <AudioCtx.Provider value={{ playCorrect, playWrong, playLevelComplete, playStar, playButton, playWorldUnlock, toggleMusic, setVolume }}>
