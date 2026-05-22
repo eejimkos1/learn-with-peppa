@@ -1,0 +1,17 @@
+{
+  "name": "Μαθαίνω με την Πέπα",
+  "short_name": "LearnPeppa",
+  "description": "Learn English with Peppa - for Greek girls aged 4-7",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFF0F5",
+  "theme_color": "#FF69B4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/star.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

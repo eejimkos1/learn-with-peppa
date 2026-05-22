@@ -1,0 +1,69 @@
+:root {
+  --color-peppa-pink: #FF69B4;
+  --color-hot-pink: #E91E63;
+  --color-light-pink: #FFB6C1;
+  --color-lavender: #CE93D8;
+  --color-gold: #FFD700;
+  --color-sky-blue: #87CEEB;
+  --color-grass-green: #4CAF50;
+  --color-bg-light: #FFF0F5;
+  --color-bg-dark: #1a0022;
+  --color-success: #4CAF50;
+  --color-error: #FF8A80;
+  --color-text-light: #ffffff;
+  --color-text-dark: #4A0028;
+
+  --font-heading: 'Bubblegum Sans', cursive;
+  --font-body: 'Comfortaa', sans-serif;
+  --font-numbers: 'Fredoka', sans-serif;
+
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 30px;
+  --radius-full: 50%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg-light);
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+}
+
+input {
+  font-family: var(--font-body);
+}
