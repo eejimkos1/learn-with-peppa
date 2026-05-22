@@ -15,15 +15,38 @@ interface AudioContextType {
 
 const AudioCtx = createContext<AudioContextType | null>(null);
 
+let sharedAudioCtx: AudioContext | null = null;
+
+function getAudioContext(): AudioContext | null {
+  try {
+    if (!sharedAudioCtx) {
+      sharedAudioCtx = new AudioContext();
+    }
+    if (sharedAudioCtx.state === 'suspended') {
+      sharedAudioCtx.resume();
+    }
+    return sharedAudioCtx;
+  } catch {
+    return null;
+  }
+}
+
+export function unlockAudioContext(): void {
+  const ctx = getAudioContext();
+  if (ctx && ctx.state === 'suspended') {
+    ctx.resume();
+  }
+}
+
 export function AudioProvider({ children }: { children: ReactNode }) {
   const { state } = useGame();
   const musicRef = useRef<Howl | null>(null);
 
-  // Synthesized sound effects using Web Audio API
   const playTone = useCallback((frequency: number, duration: number, type: OscillatorType = 'sine') => {
     if (!state.settings.sfxEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
     try {
-      const ctx = new AudioContext();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = type;

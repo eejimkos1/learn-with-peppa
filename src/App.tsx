@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GameProvider, useGame } from './context/GameContext';
-import { AudioProvider } from './context/AudioContext';
+import { AudioProvider, unlockAudioContext } from './context/AudioContext';
 import { UserProvider, useUser } from './context/UserContext';
+import { initSpeechOnUserGesture } from './utils/synthAudio';
 import { SplashScreen } from './components/screens/SplashScreen';
 import { AuthScreen } from './components/screens/AuthScreen';
 import { HomeScreen } from './components/screens/HomeScreen';
@@ -67,6 +69,21 @@ function AppWithContext() {
 }
 
 export default function App() {
+  useEffect(() => {
+    const unlock = () => {
+      initSpeechOnUserGesture();
+      unlockAudioContext();
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('click', unlock);
+    };
+    document.addEventListener('touchstart', unlock, { once: true });
+    document.addEventListener('click', unlock, { once: true });
+    return () => {
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('click', unlock);
+    };
+  }, []);
+
   return (
     <UserProvider>
       <GameProvider>
