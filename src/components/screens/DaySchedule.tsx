@@ -214,10 +214,10 @@ export function DaySchedule() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: 'clamp(10px, 2.5vh, 14px) clamp(12px, 3vw, 16px)',
+          padding: 'clamp(12px, 3vh, 16px) clamp(12px, 3vw, 16px)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'clamp(8px, 2vh, 12px)',
+          gap: 'clamp(12px, 3vh, 18px)',
           zIndex: 5,
         }}
       >
@@ -227,77 +227,123 @@ export function DaySchedule() {
           const maxStars = phase.levels.length * 3;
           const allDone = phaseStars >= maxStars;
 
+          if (phaseAvailable) {
+            return (
+              <motion.button
+                key={phase.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06, type: 'spring', stiffness: 250, damping: 20 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => handlePhaseClick(phase)}
+                style={{
+                  width: '100%',
+                  background: phase.bgGradient,
+                  border: `3px solid ${phase.accentColor}55`,
+                  borderRadius: '20px',
+                  padding: 'clamp(16px, 4vh, 24px) clamp(16px, 4vw, 20px)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'clamp(12px, 4vw, 18px)',
+                  cursor: 'pointer',
+                  boxShadow: `0 6px 24px ${phase.accentColor}40`,
+                  textAlign: 'left',
+                }}
+              >
+                <span style={{ fontSize: 'clamp(32px, 10vw, 44px)' }}>
+                  {phase.timeEmoji}
+                </span>
+
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: 'clamp(15px, 4.2vw, 19px)',
+                    color: phase.accentColor,
+                    fontWeight: 700,
+                  }}>
+                    {phase.timeGreek} · {phase.timeLabel}
+                  </div>
+                  <div style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: 'clamp(13px, 3.5vw, 16px)',
+                    color: 'rgba(0,0,0,0.7)',
+                    marginTop: '2px',
+                  }}>
+                    {phase.activityGreek}
+                  </div>
+                  <div style={{
+                    fontSize: 'clamp(11px, 2.8vw, 13px)',
+                    color: 'rgba(0,0,0,0.5)',
+                    fontFamily: 'var(--font-body)',
+                    fontStyle: 'italic',
+                  }}>
+                    {phase.activityName}
+                  </div>
+                  {allDone && (
+                    <div style={{ display: 'flex', gap: '3px', marginTop: '4px' }}>
+                      {Array.from({ length: 3 }).map((_, si) => (
+                        <span key={si} style={{ fontSize: '14px' }}>⭐</span>
+                      ))}
+                      <span style={{ fontSize: '12px', marginLeft: '4px', color: phase.accentColor, fontWeight: 700 }}>✓</span>
+                    </div>
+                  )}
+                </div>
+
+                <div style={{
+                  background: phase.accentColor,
+                  borderRadius: '14px',
+                  padding: 'clamp(8px, 2vh, 12px) clamp(12px, 3vw, 16px)',
+                  color: 'white',
+                  fontFamily: 'var(--font-heading)',
+                  fontSize: 'clamp(13px, 3.5vw, 16px)',
+                  fontWeight: 700,
+                  boxShadow: `0 3px 10px ${phase.accentColor}60`,
+                  whiteSpace: 'nowrap',
+                }}>
+                  {allDone ? '↺' : '▶ Play'}
+                </div>
+              </motion.button>
+            );
+          }
+
+          // Locked phase — compact
           return (
-            <motion.button
+            <motion.div
               key={phase.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06, type: 'spring', stiffness: 250, damping: 20 }}
-              whileTap={phaseAvailable ? { scale: 0.96 } : {}}
-              onClick={() => handlePhaseClick(phase)}
-              disabled={!phaseAvailable}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: i * 0.06 }}
               style={{
                 width: '100%',
-                background: phaseAvailable
-                  ? phase.bgGradient
-                  : 'linear-gradient(135deg, #e0e0e0, #d0d0d0)',
-                border: 'none',
-                borderRadius: '16px',
-                padding: 'clamp(12px, 3vh, 16px) clamp(14px, 4vw, 18px)',
+                background: 'rgba(200, 195, 205, 0.35)',
+                border: '1.5px solid rgba(180, 175, 185, 0.4)',
+                borderRadius: '12px',
+                padding: 'clamp(8px, 1.8vh, 10px) clamp(12px, 3vw, 16px)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'clamp(10px, 3vw, 14px)',
-                cursor: phaseAvailable ? 'pointer' : 'not-allowed',
-                opacity: phaseAvailable ? 1 : 0.5,
-                boxShadow: phaseAvailable
-                  ? `0 4px 16px ${phase.accentColor}30`
-                  : 'none',
-                textAlign: 'left',
+                gap: 'clamp(8px, 2.5vw, 12px)',
+                opacity: 0.6,
               }}
             >
-              <span style={{ fontSize: 'clamp(24px, 7vw, 32px)' }}>
-                {phaseAvailable ? phase.timeEmoji : '🔒'}
-              </span>
-
+              <span style={{ fontSize: 'clamp(16px, 5vw, 20px)' }}>🔒</span>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{
                   fontFamily: 'var(--font-heading)',
-                  fontSize: 'clamp(14px, 3.8vw, 17px)',
-                  color: phaseAvailable ? phase.accentColor : '#999',
-                  fontWeight: 700,
+                  fontSize: 'clamp(12px, 3vw, 14px)',
+                  color: '#999',
+                  fontWeight: 600,
                 }}>
-                  {phase.activityGreek}
+                  {phase.timeGreek} · {phase.timeLabel}
                 </div>
                 <div style={{
-                  fontSize: 'clamp(11px, 2.8vw, 13px)',
-                  color: phaseAvailable ? 'rgba(0,0,0,0.6)' : '#bbb',
+                  fontSize: 'clamp(10px, 2.5vw, 12px)',
+                  color: '#bbb',
                   fontFamily: 'var(--font-body)',
                 }}>
                   {phase.activityName}
                 </div>
               </div>
-
-              {phaseAvailable && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                  {allDone ? (
-                    <span style={{ fontSize: '18px' }}>✅</span>
-                  ) : (
-                    <div style={{ display: 'flex', gap: '2px' }}>
-                      {Array.from({ length: Math.min(3, maxStars) }).map((_, si) => (
-                        <span key={si} style={{
-                          fontSize: '14px',
-                          opacity: si < Math.min(phaseStars, 3) ? 1 : 0.25,
-                        }}>⭐</span>
-                      ))}
-                    </div>
-                  )}
-                  <span style={{
-                    fontSize: '16px',
-                    color: phase.accentColor,
-                  }}>›</span>
-                </div>
-              )}
-            </motion.button>
+            </motion.div>
           );
         })}
       </div>
